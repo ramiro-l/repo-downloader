@@ -305,7 +305,7 @@ const Folder = forwardRef<
                         <div className="flex gap-1">
                             <Button
                                 variant="outline"
-                                className="h-2 text-xs px-1 uppercase hover:bg-secondary hover:text-secondary-foreground dark:hover:bg-secondary-foreground dark:hover:text-secondary"
+                                className="h-2 text-xs px-1 uppercase hover:bg-black hover:text-white hover:border-black dark:hover:bg-secondary-foreground dark:hover:text-secondary dark:hover:border-secondary-foreground "
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     handelButtonSelectAll?.(value)
@@ -315,7 +315,7 @@ const Folder = forwardRef<
                             </Button>
                             <Button
                                 variant="outline"
-                                className="h-2 text-xs px-1 uppercase hover:bg-red-600 hover:text-white"
+                                className="h-2 text-xs px-1 uppercase hover:bg-red-600 hover:border-red-600 hover:text-white"
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     handleButtonDeslectAll?.(value)

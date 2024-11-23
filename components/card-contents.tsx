@@ -10,7 +10,7 @@ export default function CardContents() {
     return (
         <div className=" border rounded-xl px-1 py-2 dark:bg-background bg-slate-100">
             {contents.length === 0 ? (
-                <p className="text-center text-accent">
+                <p className="text-center  text-secondary-foreground/60">
                     Search for a repository
                 </p>
             ) : (
