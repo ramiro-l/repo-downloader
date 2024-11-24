@@ -1,8 +1,5 @@
-import { RepositoryProvider } from "@/context/RepositoryContext"
-
 import WordFadeIn from "@/components/ui/word-fade-in"
-import CardContents from "@/components/card-contents"
-import InputRepo from "@/components/input-repo"
+import ContainerTool from "@/components/tool/container-tool"
 
 export default async function IndexPage() {
     return (
@@ -21,12 +18,7 @@ export default async function IndexPage() {
                 </p>
             </div>
 
-            <div>
-                <RepositoryProvider>
-                    <InputRepo />
-                    <CardContents />
-                </RepositoryProvider>
-            </div>
+            <ContainerTool />
         </section>
     )
 }

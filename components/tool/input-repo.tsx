@@ -18,6 +18,7 @@ export default function InputRepo() {
         setErrorMessages("")
         try {
             await initRepository(url)
+            setUrl("")
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessages(error.message)
@@ -28,8 +29,8 @@ export default function InputRepo() {
     }
 
     return (
-        <div className="flex gap-2 mb-2">
-            <div className="flex-col w-full">
+        <div className="flex gap-2 mb-4 max-lg:flex-col">
+            <div className="flex-col w-full ">
                 <Input
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
@@ -41,7 +42,7 @@ export default function InputRepo() {
                     </span>
                 )}
             </div>
-            <Button onClick={handleSubmit}>
+            <Button onClick={handleSubmit} className="w-1/6 max-lg:w-auto">
                 <SearchCode size={24} />
             </Button>
         </div>

@@ -16,6 +16,7 @@ import {
     FolderIcon,
     FolderOpenDot,
     FolderOpenIcon,
+    X,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -302,10 +303,10 @@ const Folder = forwardRef<
                         <span>{element}</span>
                     </div>
                     {expandedItems?.includes(value) && (
-                        <div className="flex gap-1">
+                        <div className="flex gap-1 select-none">
                             <Button
                                 variant="outline"
-                                className="h-2 text-xs px-1 uppercase hover:bg-black hover:text-white hover:border-black dark:hover:bg-secondary-foreground dark:hover:text-secondary dark:hover:border-secondary-foreground "
+                                className="h-2 text-xs px-1 uppercase dark:border-white hover:bg-black hover:text-white hover:border-black dark:hover:bg-secondary-foreground dark:hover:text-secondary dark:hover:border-secondary-foreground "
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     handelButtonSelectAll?.(value)
@@ -315,13 +316,13 @@ const Folder = forwardRef<
                             </Button>
                             <Button
                                 variant="outline"
-                                className="h-2 text-xs px-1 uppercase hover:bg-red-600 hover:border-red-600 hover:text-white"
+                                className="h-2 text-xs px-0 uppercase hover:bg-red-600 hover:!border-red-600 hover:text-white dark:border-white"
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     handleButtonDeslectAll?.(value)
                                 }}
                             >
-                                x
+                                <X className="size-4" />
                             </Button>
                         </div>
                     )}

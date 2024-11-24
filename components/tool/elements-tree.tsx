@@ -1,5 +1,5 @@
 import { File, Folder } from "@/components/ui/file-tree"
-import DotsLoading from "@/components/dots-loading"
+import DotsLoading from "@/components/tool/dots-loading"
 
 export default function ElementsTree({
     contents,
