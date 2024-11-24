@@ -2,7 +2,7 @@
 
 import React, { ReactNode, createContext, useRef, useState } from "react"
 
-import { GithubElement, isGithubElement } from "@/types/github"
+import { GITHUB_API_URL, GithubElement, isGithubElement } from "@/types/github"
 
 interface RepoElement extends GithubElement {
     selected: boolean
@@ -12,6 +12,9 @@ interface RepoElement extends GithubElement {
 
 interface RepositoryContextProps {
     url: string
+    api_url: string
+    owner: string
+    repo: string
     branch_selected: string
     branches: string[]
     contents: RepoElement[]
@@ -32,6 +35,7 @@ export const RepositoryProvider: React.FC<{ children: ReactNode }> = ({
     const [url, setUrl] = useState<string>("")
     let owner = useRef<string>("")
     let repo = useRef<string>("")
+    let api_url = useRef<string>("")
     const [branch_selected, setBranchSelected] = useState<string>("main")
     const [branches, setBranches] = useState<string[]>([])
     const [contents, setContents] = useState<RepoElement[]>([])
@@ -46,14 +50,13 @@ export const RepositoryProvider: React.FC<{ children: ReactNode }> = ({
                 "Invalid GitHub URL, do not use a git repository URL"
             )
         }
-
-        setLoading(true)
+        setLoading(false)
         setUrl(url)
         parsePath(url)
-        // await setBranchesData()
-        // ensureBranchIsValid()
+        await setBranchesData()
+        ensureBranchIsValid()
         await setContentsData()
-        setLoading(false)
+        setLoading(true)
     }
 
     // Parse the URL to get owner and repo
@@ -62,6 +65,7 @@ export const RepositoryProvider: React.FC<{ children: ReactNode }> = ({
         if (match) {
             owner.current = match[1]
             repo.current = match[2]
+            api_url.current = `${GITHUB_API_URL}/${owner.current}/${repo.current}`
         } else {
             throw new Error("Invalid URL, expected github.com/<owner>/<repo>")
         }
@@ -86,9 +90,7 @@ export const RepositoryProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     const fetchBranches = async (): Promise<string[]> => {
-        const response = await fetch(
-            `https://api.github.com/repos/${owner}/${repo}/branches`
-        )
+        const response = await fetch(`${api_url.current}/branches`)
 
         if (!response.ok) {
             throw new Error("Failed to get branches")
@@ -135,7 +137,7 @@ export const RepositoryProvider: React.FC<{ children: ReactNode }> = ({
     const setContentsData = async () => {
         setContents(
             await fetchContents(
-                `https://api.github.com/repos/${owner.current}/${repo.current}/contents?ref=${branch_selected}`
+                `${api_url.current}/contents?ref=${branch_selected}`
             )
         )
     }
@@ -144,38 +146,37 @@ export const RepositoryProvider: React.FC<{ children: ReactNode }> = ({
         sha: string,
         value_selected: boolean
     ) => {
-        const updateAll = async (el: RepoElement, selected: boolean) => {
-            const updatedDirContent: RepoElement[] = await Promise.all(
-                el.dirContent.map(async (dirEl) => {
-                    if (dirEl.type === "dir") {
-                        return await updateAll(dirEl, selected)
-                    } else {
-                        return await updateFile(dirEl, selected)
-                    }
-                })
-            )
-            return {
-                ...el,
-                selected: selected,
-                dirContent: updatedDirContent,
+        const updateAll = async (
+            el: RepoElement,
+            selected: boolean
+        ): Promise<RepoElement> => {
+            if (el.type === "dir") {
+                const updatedDirContent = await Promise.all(
+                    el.dirContent.map(async (dirEl) => {
+                        return updateAll(dirEl, selected)
+                    })
+                )
+                return {
+                    ...el,
+                    selected: selected,
+                    dirContent: updatedDirContent,
+                }
+            } else {
+                return { ...el, selected: selected }
             }
         }
 
-        const updateFile = async (el: RepoElement, selected: boolean) => {
-            return { ...el, selected: selected }
-        }
-
-        const updateToggleSelect = (el: RepoElement) => {
+        const updateToggleSelect = async (el: RepoElement) => {
             if (!el) throw new Error("Element not found")
-            return updateAll(el, value_selected)
+            return await updateAll(el, value_selected)
         }
 
-        await updateElement(sha, updateToggleSelect, (el) => {
-            return {
-                ...el,
-                selected: el.dirContent.every((content) => content.selected),
-            }
+        const updateToggleSelectFather = (el: RepoElement) => ({
+            ...el,
+            selected: el.dirContent.every((dirEl) => dirEl.selected),
         })
+
+        await updateElement(sha, updateToggleSelect, updateToggleSelectFather)
     }
 
     const loadDirectory = async (sha: string) => {
@@ -294,6 +295,8 @@ export const RepositoryProvider: React.FC<{ children: ReactNode }> = ({
         <RepositoryContext.Provider
             value={{
                 url,
+                owner: owner.current,
+                repo: repo.current,
                 branch_selected,
                 branches,
                 contents,
