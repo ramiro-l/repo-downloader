@@ -45,3 +45,7 @@ export function getGithubRepoWebUrl(owner: string, repo: string, branch?: string
         return `${GITHUB_URL}/${owner}/${repo}/tree/${branch}`;
     }
 }
+
+export function getGithubDownloadUrl(owner: string, repo: string, branch: string) {
+    return `${GITHUB_URL}/${owner}/${repo}/zipball/${branch}/`;
+}

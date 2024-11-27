@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { File } from "@/services/file"
 import {
+    getGithubDownloadUrl,
     getGithubRepoWebUrl,
     getGithubUrlInfo,
     isGithubUrl,
@@ -25,6 +26,7 @@ export interface RepositoryController {
     container: File<MetaData>[]
     cantFilesSelected: number
     cantFoldersSelected: number
+    downloadRepoUrl: string
     initRepository: (url: string) => Promise<void>
     toggleSelectItem: (pathIndex: number[]) => void
     selectFolder: (pathIndex: number[], selected: boolean) => void
@@ -39,12 +41,14 @@ export function useRepositoryController(): RepositoryController {
     const [loadingRepository, setLoadingRepository] = useState<boolean>(false)
     const [cantFilesSelected, setCantFilesSelected] = useState<number>(0)
     const [cantFoldersSelected, setCantFoldersSelected] = useState<number>(0)
+    const [downloadRepoUrl, setDownloadRepoUrl] = useState<string>("")
 
     const fetchContainerForBranch = async (branch: string) => {
         if (!owner) throw new Error("Owner not set")
         if (!repo) throw new Error("Repo not set")
         await loadContainer(owner, repo, branch)
         setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
+        setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
     }
 
     const {
@@ -73,6 +77,7 @@ export function useRepositoryController(): RepositoryController {
             setCantFoldersSelected(0)
             const branch = await initBranches(owner, repo, urlInfo.branch)
             setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
+            setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
             await loadContainer(owner, repo, branch)
             setLoadingRepository(false)
         } else {
@@ -147,6 +152,7 @@ export function useRepositoryController(): RepositoryController {
         container,
         cantFilesSelected,
         cantFoldersSelected,
+        downloadRepoUrl,
         initRepository,
         toggleSelectItem,
         selectFolder,
