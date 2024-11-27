@@ -9,7 +9,7 @@ export function MainNav() {
         <div className="flex gap-6 md:gap-10">
             <Link href="/" className="flex items-center space-x-2">
                 <Icons.Logo className="size-6 mb-1" />
-                <span className="inline-block font-bold font-mono underline">
+                <span className="inline-block font-bold font-mono">
                     {siteConfig.name}
                 </span>
             </Link>

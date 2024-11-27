@@ -1,5 +1,5 @@
 import {
-    ArrowBigUpDash,
+    FolderUp,
     LucideProps,
     Moon,
     SunMedium,
@@ -11,7 +11,7 @@ export type Icon = typeof LucideIcon
 export const Icons = {
     Sun: SunMedium,
     Moon: Moon,
-    Logo: ArrowBigUpDash,
+    Logo: FolderUp,
     GitHub: (props: LucideProps) => (
         <svg viewBox="0 0 438.549 438.549" {...props}>
             <path
