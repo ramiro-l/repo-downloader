@@ -51,6 +51,8 @@ export function useRepositoryController(): RepositoryController {
     const fetchContainerForBranch = async (branch: string) => {
         if (!owner) throw new Error("Owner not set")
         if (!repo) throw new Error("Repo not set")
+        setCantFilesSelected(0)
+        setCantFoldersSelected(0)
         await loadContainer(owner, repo, branch)
         setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
         setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
@@ -75,6 +77,8 @@ export function useRepositoryController(): RepositoryController {
 
     const initRepository = async (url: string) => {
         setLoadingRepository(true)
+        setCantFilesSelected(0)
+        setCantFoldersSelected(0)
         if (isGithubUrl(url)) {
             const urlInfo = getGithubUrlInfo(url)
             const { owner, repo } = urlInfo

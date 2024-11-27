@@ -29,7 +29,7 @@ function Tool() {
                     }`}
             >
                 <CardInfoRepo />
-                <div className="flex gap-2 !max-h-[85vh]">
+                <div className="flex gap-2 !max-h-[85vh] max-md:flex-col">
                     <CardContainer />
                     <SelectedItemsDownloader />
                 </div>

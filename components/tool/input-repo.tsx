@@ -7,9 +7,8 @@ import { CircleX, SearchCode } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Spinner } from "@/components/ui/spinner"
 import scrollToBottom from "@/components/scrollBottom"
-
-import DotsLoading from "./dots-loading"
 
 export default function InputRepo() {
     const { initRepository, loading } = useRepository()
@@ -76,18 +75,12 @@ export default function InputRepo() {
                     </span>
                 )}
             </div>
-            <Button onClick={handleSubmit} className="w-1/6 max-lg:w-auto">
-                <SearchCode size={24} />
-
-                <span
-                    className={`scale-75 ml-2 ${
-                        !loading
-                            ? "opacity-0 scale-0 w-0"
-                            : "opacity-100 scale-100 w-auto"
-                    } transition-all duration-150 `}
-                >
-                    <DotsLoading fill="white" />
-                </span>
+            <Button
+                onClick={handleSubmit}
+                className="w-1/6 max-lg:w-auto flex gap-2 items-center"
+            >
+                {!loading ? <SearchCode size={24} /> : <Spinner size="small" />}
+                <span>{!loading ? "Search" : "Loading"}</span>
             </Button>
         </div>
     )

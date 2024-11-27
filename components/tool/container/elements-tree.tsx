@@ -9,7 +9,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import DotsLoading from "@/components/tool/dots-loading"
 
 export default function ElementsTree({
     container,
@@ -36,14 +35,12 @@ export default function ElementsTree({
                             selectFolder(file.pathIndex, false)
                         }
                     >
-                        {file.content.length > 0 ? (
+                        {file.content.length > 0 && (
                             <ElementsTree
                                 container={file.content}
                                 toggleSelectItem={toggleSelectItem}
                                 selectFolder={selectFolder}
                             />
-                        ) : (
-                            <DotsLoading />
                         )}
                     </Folder>
                 ) : (

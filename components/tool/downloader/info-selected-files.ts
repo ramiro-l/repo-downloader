@@ -8,7 +8,7 @@ export function infoSelectedFiles(
     if (cantFilesSelected > 0 && cantFoldersSelected === 0) {
         return `${formatFiles(
             cantFilesSelected
-        )} selected, and no folders selected`
+        )} selected and no folders selected`
     }
     if (cantFilesSelected === 0 && cantFoldersSelected > 0) {
         return `No files selected, and ${formatFolders(
