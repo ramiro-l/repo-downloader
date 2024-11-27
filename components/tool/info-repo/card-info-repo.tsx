@@ -8,7 +8,7 @@ export default function CardInfoRepo() {
 
     return (
         <div className=" flex items-center justify-between border border-input rounded-lg p-2 bg-background w-full z-10">
-            <div className="w-full ml-2">
+            <div className="w-2/3 ml-2">
                 <a
                     className="text-sm font-bold hover:underline "
                     href={repoWebUrl}
@@ -17,7 +17,7 @@ export default function CardInfoRepo() {
                     {owner}/{repo}
                 </a>
             </div>
-            <div className="w-1/3 flex gap-2">
+            <div className="w-1/3 ml-3  flex gap-2">
                 <DownloadRepositoryButton />
                 <BranchSelectMenu />
             </div>
