@@ -22,6 +22,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import scrollToBottom from "@/components/scrollBottom"
 
 type TreeViewElement = {
     id: string
@@ -95,6 +96,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
         }, [])
 
         const handleExpand = useCallback((id: string) => {
+            scrollToBottom()
             setExpandedItems((prev) => {
                 if (prev?.includes(id)) {
                     return prev.filter((item) => item !== id)

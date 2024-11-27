@@ -1,40 +1,39 @@
+import { File as FileItem } from "@/services/file"
+
+import { MetaData } from "@/hooks/git/RepositoryController"
 import { File, Folder } from "@/components/ui/file-tree"
 import DotsLoading from "@/components/tool/dots-loading"
 
 export default function ElementsTree({
-    contents,
-    toggleSelectElement,
-    loadDirectory,
+    container,
+    toggleSelectItem,
+    selectFolder,
 }: Readonly<{
-    contents: any[]
-    toggleSelectElement: (sha: string, value_selected: boolean) => void
-    loadDirectory: (sha: string) => Promise<void>
+    container: FileItem<MetaData>[]
+    toggleSelectItem: (pathIndex: number[]) => void
+    selectFolder: (pathIndex: number[], selected: boolean) => void
 }>) {
     return (
         <>
-            {contents.map((content) =>
-                content.type === "dir" ? (
+            {container.map((file) =>
+                file.type === "dir" ? (
                     <Folder
-                        key={content.sha}
-                        value={content.sha}
-                        element={content.name}
-                        isSelect={content.selected}
-                        onClick={async () => {
-                            if (content.dirContent.length > 0) return
-                            await loadDirectory(content.sha)
-                        }}
+                        key={file.id}
+                        value={file.id}
+                        element={file.name}
+                        isSelect={file.metaData?.selected}
                         handelButtonSelectAll={() =>
-                            toggleSelectElement(content.sha, true)
+                            selectFolder(file.pathIndex, true)
                         }
                         handleButtonDeslectAll={() =>
-                            toggleSelectElement(content.sha, false)
+                            selectFolder(file.pathIndex, false)
                         }
                     >
-                        {content.dirContent.length > 0 ? (
+                        {file.content.length > 0 ? (
                             <ElementsTree
-                                contents={content.dirContent}
-                                toggleSelectElement={toggleSelectElement}
-                                loadDirectory={loadDirectory}
+                                container={file.content}
+                                toggleSelectItem={toggleSelectItem}
+                                selectFolder={selectFolder}
                             />
                         ) : (
                             <DotsLoading />
@@ -42,14 +41,12 @@ export default function ElementsTree({
                     </Folder>
                 ) : (
                     <File
-                        key={content.sha}
-                        value={content.path}
-                        isSelect={content.selected}
-                        handleSelect={() =>
-                            toggleSelectElement(content.sha, !content.selected)
-                        }
+                        key={file.id}
+                        value={file.id}
+                        isSelect={file.metaData?.selected}
+                        handleSelect={() => toggleSelectItem(file.pathIndex)}
                     >
-                        <p>{content.name}</p>
+                        <p>{file.name}</p>
                     </File>
                 )
             )}
