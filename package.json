@@ -23,6 +23,7 @@
     "@radix-ui/react-tooltip": "^1.1.4",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
+    "filesize": "^10.1.6",
     "framer-motion": "^11.11.17",
     "lucide-react": "^0.460.0",
     "next": "^13.4.8",

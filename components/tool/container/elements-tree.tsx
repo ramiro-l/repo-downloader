@@ -1,7 +1,14 @@
 import { File as FileItem } from "@/services/file"
+import { filesize } from "filesize"
 
 import { MetaData } from "@/hooks/git/RepositoryController"
 import { File, Folder } from "@/components/ui/file-tree"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import DotsLoading from "@/components/tool/dots-loading"
 
 export default function ElementsTree({
@@ -46,7 +53,26 @@ export default function ElementsTree({
                         isSelect={file.metaData?.selected}
                         handleSelect={() => toggleSelectItem(file.pathIndex)}
                     >
-                        <p>{file.name}</p>
+                        <TooltipProvider delayDuration={800}>
+                            <Tooltip>
+                                <TooltipTrigger>{file.name}</TooltipTrigger>
+                                <TooltipContent
+                                    side="right"
+                                    className={`h-4 flex justify-center items-center text-xs py-0 shadow-none ${
+                                        file.metaData?.selected &&
+                                        "bg-primary ml-2  border-primary text-white"
+                                    }`}
+                                >
+                                    <p>
+                                        {filesize(file.size, {
+                                            fullform: file.size < 1000,
+                                        })}
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+
+                        <p></p>
                     </File>
                 )
             )}
