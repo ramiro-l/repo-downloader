@@ -86,7 +86,7 @@ export default function InputRepo() {
                             : "opacity-100 scale-100 w-auto"
                     } transition-all duration-150`}
                 >
-                    <DotsLoading type="light" />
+                    <DotsLoading />
                 </span>
             </Button>
         </div>
