@@ -7,9 +7,10 @@ interface IFile<TMetaData> {
     metaData?: TMetaData;
     pathIndex?: number[];
     content?: File<TMetaData>[];
+    downloadUrl?: string;
 }
 
-class File<TMetaData> {
+class File<TMetaData> implements IFile<TMetaData> {
     id: string;
     name: string;
     size: number;
@@ -18,6 +19,7 @@ class File<TMetaData> {
     type: "file" | "dir";
     metaData: TMetaData;
     _content?: File<TMetaData>[];
+    _downloadUrl?: string;
 
     constructor(item: IFile<TMetaData>, initMetaData: TMetaData) {
         this.id = item.id;
@@ -27,12 +29,19 @@ class File<TMetaData> {
         this.type = item.type;
         this._content = item.content;
         this.metaData = initMetaData;
+        this._downloadUrl = item.downloadUrl;
     }
 
     public get content(): File<TMetaData>[] {
         if (!this.isDirectory()) throw new Error("File is not a directory")
         if (!this._content) throw new Error("Directory content is undefined")
         return this._content
+    }
+
+    public get downloadUrl(): string {
+        if (this.isDirectory()) throw new Error("Directory does not have download URL")
+        if (!this._downloadUrl) throw new Error("Download URL is undefined")
+        return this._downloadUrl
     }
 
     pushPathIndex(newIndex: number) {

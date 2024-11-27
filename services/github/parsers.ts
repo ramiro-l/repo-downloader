@@ -1,4 +1,4 @@
-import { GITHUB_URL } from "./const"
+import { GITHUB_URL, GITHUB_RAW_URL } from "./const"
 
 export const getGithubUrlInfo = (url: string): { owner: string, repo: string, branch?: string } => {
     // URL con rama: github.com/<owner>/<repo>/tree/<branch>
@@ -48,4 +48,8 @@ export function getGithubRepoWebUrl(owner: string, repo: string, branch?: string
 
 export function getGithubDownloadUrl(owner: string, repo: string, branch: string) {
     return `${GITHUB_URL}/${owner}/${repo}/zipball/${branch}/`;
+}
+
+export function getGithubRawUrl(owner: string, repo: string, branch: string, path: string) {
+    return `${GITHUB_RAW_URL}/${owner}/${repo}/${branch}/${path}`;
 }

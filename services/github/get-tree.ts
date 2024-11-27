@@ -6,7 +6,7 @@ export async function getGithubFiles<TMetaData>(
     owner: string,
     repo: string,
     initMetadata: TMetaData,
-    branch?: string,
+    branch: string,
 ): Promise<{
     files: File<TMetaData>[];
     rootId: string;
@@ -14,7 +14,7 @@ export async function getGithubFiles<TMetaData>(
     const tree = await getGithubTree(owner, repo, branch);
 
     return {
-        files: await githubTreeToFiles(tree, initMetadata),
+        files: await githubTreeToFiles(tree, initMetadata, owner, repo, branch),
         rootId: tree.sha,
     };
 }
@@ -22,7 +22,7 @@ export async function getGithubFiles<TMetaData>(
 export async function getGithubTree(
     owner: string,
     repo: string,
-    branch?: string
+    branch: string
 ): Promise<GithubTree> {
     const url = `${GITHUB_API_URL}/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
     const response = await fetch(url);
@@ -37,12 +37,15 @@ export async function getGithubTree(
 
 export async function githubTreeToFiles<TMetaData>(
     tree: GithubTree,
-    initMetadata: TMetaData
+    initMetadata: TMetaData,
+    owner: string,
+    repo: string,
+    branch: string
 ): Promise<File<TMetaData>[]> {
     const container: File<TMetaData>[] = [];
 
     for (const item of tree.tree) {
-        const file = new File(adaptGithubItemForFile<TMetaData>(item), initMetadata);
+        const file = new File(adaptGithubItemForFile<TMetaData>(item, owner, repo, branch), initMetadata);
         addFileToContainer(file, container);
     }
 

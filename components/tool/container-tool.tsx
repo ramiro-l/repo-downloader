@@ -3,7 +3,7 @@
 import { RepositoryProvider, useRepository } from "@/context/RepositoryContext"
 
 import CardContainer from "@/components/tool/container/card-container"
-import CardDownload from "@/components/tool/download/card-download"
+import SelectedItemsDownloader from "@/components/tool/downloader/card-downloader"
 import CardInfoRepo from "@/components/tool/info-repo/card-info-repo"
 import InputRepo from "@/components/tool/input-repo"
 
@@ -31,7 +31,7 @@ function Tool() {
                 <CardInfoRepo />
                 <div className="flex gap-2 !max-h-[85vh]">
                     <CardContainer />
-                    <CardDownload />
+                    <SelectedItemsDownloader />
                 </div>
             </div>
         </>

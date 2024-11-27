@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { createAndDownloadZip } from "@/services/downloader"
 import { File } from "@/services/file"
 import {
     getGithubDownloadUrl,
@@ -6,6 +7,8 @@ import {
     getGithubUrlInfo,
     isGithubUrl,
 } from "@/services/github/parsers"
+
+import { siteConfig } from "@/config/site"
 
 import { useBranches } from "./Branches"
 import { useContainer } from "./Container"
@@ -32,6 +35,7 @@ export interface RepositoryController {
     selectFolder: (pathIndex: number[], selected: boolean) => void
     toggleBranch: (newBranch: string) => Promise<void>
     deselectAll: () => void
+    downloadSelectedFiles: () => Promise<void>
 }
 
 export function useRepositoryController(): RepositoryController {
@@ -66,6 +70,7 @@ export function useRepositoryController(): RepositoryController {
         loadContainer,
         updateMetaData,
         updateAllMetaData,
+        collectFilteredFiles,
     } = useContainer<MetaData>(initMetaData)
 
     const initRepository = async (url: string) => {
@@ -146,6 +151,16 @@ export function useRepositoryController(): RepositoryController {
         setCantFoldersSelected(0)
     }
 
+    const downloadSelectedFiles = async () => {
+        const selectedFiles = collectFilteredFiles(
+            (file) => file.metaData.selected && file.isFile()
+        )
+        await createAndDownloadZip(
+            selectedFiles,
+            `${siteConfig.name}-${owner}-${repo}-${branchSelected}.zip`
+        )
+    }
+
     useEffect(() => {
         setLoading(loadingBranches || loadingContainer || loadingRepository)
     }, [loadingContainer, loadingBranches, loadingRepository])
@@ -166,5 +181,6 @@ export function useRepositoryController(): RepositoryController {
         selectFolder,
         toggleBranch,
         deselectAll,
+        downloadSelectedFiles,
     }
 }

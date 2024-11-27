@@ -71,8 +71,6 @@ export default function ElementsTree({
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-
-                        <p></p>
                     </File>
                 )
             )}

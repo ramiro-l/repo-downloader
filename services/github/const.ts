@@ -1,4 +1,5 @@
 const GITHUB_API_URL = "https://api.github.com";
+const GITHUB_RAW_URL = "https://raw.githubusercontent.com";
 const GITHUB_URL = "https://github.com";
 
 interface IGithubTree {
@@ -89,4 +90,4 @@ const isGithubTreeItem = (element: any): element is IGithubTreeItem => {
     );
 };
 
-export { GithubTree, GithubTreeItem, GithubTreeItemMode, GITHUB_API_URL, GITHUB_URL };
+export { GithubTree, GithubTreeItem, GithubTreeItemMode, GITHUB_API_URL, GITHUB_URL, GITHUB_RAW_URL };
