@@ -1,4 +1,5 @@
 import { useRepository } from "@/context/RepositoryContext"
+import { GitBranch } from "lucide-react"
 
 import {
     Select,
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/select"
 
 export default function CardInfoRepo() {
-    const { owner, repo, repoWebUrl, branchSelected, branches } =
+    const { owner, repo, repoWebUrl, branchSelected, branches, toggleBranch } =
         useRepository()
 
     return (
@@ -24,18 +25,28 @@ export default function CardInfoRepo() {
                 </a>
             </div>
             <div className="w-1/4">
-                {/* <Select defaultValue={branch_selected}>
-                    <SelectTrigger>
-                        <SelectValue>{branch_selected}</SelectValue>
+                <Select
+                    value={branchSelected}
+                    onValueChange={(value) => {
+                        toggleBranch(value)
+                    }}
+                >
+                    <SelectTrigger id="select-15">
+                        <div className="flex items-center gap-2 truncate w-[95%] ">
+                            <GitBranch className="h-4 w-4" />
+                            <div className="w-[90%] truncate text-left">
+                                <SelectValue placeholder="Select branch" />
+                            </div>
+                        </div>
                     </SelectTrigger>
-                    <SelectContent className="w-fit" avoidCollisions={false}>
+                    <SelectContent align="end" avoidCollisions={false}>
                         {branches.map((branch) => (
                             <SelectItem key={branch} value={branch}>
                                 {branch}
                             </SelectItem>
                         ))}
                     </SelectContent>
-                </Select> */}
+                </Select>
             </div>
         </div>
     )

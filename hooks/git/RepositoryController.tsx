@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { File } from "@/services/file"
 import {
-    getGithubRepoOwnerAndName,
     getGithubRepoWebUrl,
+    getGithubUrlInfo,
     isGithubUrl,
 } from "@/services/github/parsers"
 
@@ -35,7 +35,8 @@ export function useRepositoryController(): RepositoryController {
     const [repoWebUrl, setRepoWebUrl] = useState<string>("")
     const [owner, setOwner] = useState<string>()
     const [repo, setRepo] = useState<string>()
-    const [loading, _setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
+    const [loadingRepository, setLoadingRepository] = useState<boolean>(false)
     const [cantFilesSelected, setCantFilesSelected] = useState<number>(0)
     const [cantFoldersSelected, setCantFoldersSelected] = useState<number>(0)
 
@@ -62,9 +63,11 @@ export function useRepositoryController(): RepositoryController {
     } = useContainer<MetaData>(initMetaData)
 
     const initRepository = async (url: string) => {
-        setLoading(true)
+        setLoadingRepository(true)
         if (isGithubUrl(url)) {
-            const { owner, repo } = getGithubRepoOwnerAndName(url)
+            const urlInfo = getGithubUrlInfo(url)
+            const { owner, repo } = urlInfo
+            console.log(urlInfo)
             setOwner(owner)
             setRepo(repo)
             setCantFilesSelected(0)
@@ -72,11 +75,11 @@ export function useRepositoryController(): RepositoryController {
             const branch = await initBranches(owner, repo)
             setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
             await loadContainer(owner, repo, branch)
-            setLoading(false)
+            setLoadingRepository(false)
         } else {
             throw new Error("Invalid repository URL.")
         }
-        setLoading(false)
+        setLoadingRepository(false)
     }
 
     const toggleSelectItem = (pathIndex: number[]) => {
@@ -130,13 +133,9 @@ export function useRepositoryController(): RepositoryController {
         return { ...file.metaData, selected }
     }
 
-    const setLoading = (loading: boolean) => {
-        _setLoading(loading || loadingBranches || loadingContainer)
-    }
-
     useEffect(() => {
-        setLoading(loadingBranches || loadingContainer || loading)
-    }, [loadingContainer, loadingBranches])
+        setLoading(loadingBranches || loadingContainer || loadingRepository)
+    }, [loadingContainer, loadingBranches, loadingRepository])
 
     return {
         loading,
