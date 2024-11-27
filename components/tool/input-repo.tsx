@@ -84,9 +84,9 @@ export default function InputRepo() {
                         !loading
                             ? "opacity-0 scale-0 w-0"
                             : "opacity-100 scale-100 w-auto"
-                    } transition-all duration-150`}
+                    } transition-all duration-150 `}
                 >
-                    <DotsLoading />
+                    <DotsLoading fill="white" />
                 </span>
             </Button>
         </div>
