@@ -71,7 +71,7 @@ export function useRepositoryController(): RepositoryController {
             setRepo(repo)
             setCantFilesSelected(0)
             setCantFoldersSelected(0)
-            const branch = await initBranches(owner, repo)
+            const branch = await initBranches(owner, repo, urlInfo.branch)
             setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
             await loadContainer(owner, repo, branch)
             setLoadingRepository(false)

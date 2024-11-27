@@ -14,19 +14,20 @@ export function useBranches(loadContainer: (branch: string) => Promise<void>) {
 
     const initBranches = async (
         owner: string,
-        repo: string
+        repo: string,
+        initBranch?: string
     ): Promise<string> => {
         setLoading(true)
         const branches = await getGithubBranches(owner, repo)
         setBranches(branches)
-        const firtBranch = initBranchSelected(branches)
+        const firstBranch = initBranch ?? initBranchSelected(branches)
+        setBranchSelected(firstBranch)
         setLoading(false)
-        return firtBranch
+        return firstBranch
     }
 
     const initBranchSelected = (banches: string[]): string => {
         const branch = banches[banches.length - 1]
-        setBranchSelected(branch)
         return branch
     }
 
