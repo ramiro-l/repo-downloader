@@ -27,16 +27,15 @@ export default function InputRepo() {
 
     async function handleSubmit() {
         setErrorMessages("")
-        if (!url || url === "") {
-            setErrorMessages("Please enter a valid URL")
-            return
-        }
         try {
+            if (!url || url === "")
+                throw new Error("The repository URL is required")
             router.push(`?repository=${encodeURIComponent(url)}`)
             await initRepository(url)
             scrollToBottom()
         } catch (error) {
             if (error instanceof Error) {
+                router.push("/")
                 setErrorMessages(error.message)
             } else {
                 setErrorMessages("An unknown error occurred")
@@ -50,7 +49,7 @@ export default function InputRepo() {
                 <Input
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    placeholder="Paste the github repository URL"
+                    placeholder="Paste the git repository URL"
                 />
                 {errorMessages && (
                     <span className="text-red-500 text-sm ml-1 duration-200 transition-all">

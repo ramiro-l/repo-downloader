@@ -67,7 +67,6 @@ export function useRepositoryController(): RepositoryController {
         if (isGithubUrl(url)) {
             const urlInfo = getGithubUrlInfo(url)
             const { owner, repo } = urlInfo
-            console.log(urlInfo)
             setOwner(owner)
             setRepo(repo)
             setCantFilesSelected(0)
@@ -77,6 +76,7 @@ export function useRepositoryController(): RepositoryController {
             await loadContainer(owner, repo, branch)
             setLoadingRepository(false)
         } else {
+            setLoadingRepository(false)
             throw new Error("Invalid repository URL.")
         }
         setLoadingRepository(false)
