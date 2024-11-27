@@ -1,6 +1,7 @@
 import { useRepository } from "@/context/RepositoryContext"
 
 import BranchSelectMenu from "@/components/tool/info-repo/branch-select-menu"
+import DeselectAllButton from "@/components/tool/info-repo/deselect-all-button"
 import DownloadRepositoryButton from "@/components/tool/info-repo/download-repository-button"
 
 export default function CardInfoRepo() {
@@ -18,6 +19,7 @@ export default function CardInfoRepo() {
                 </a>
             </div>
             <div className="w-1/3 ml-3  flex gap-2">
+                <DeselectAllButton />
                 <DownloadRepositoryButton />
                 <BranchSelectMenu />
             </div>

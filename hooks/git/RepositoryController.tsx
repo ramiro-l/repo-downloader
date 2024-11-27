@@ -31,6 +31,7 @@ export interface RepositoryController {
     toggleSelectItem: (pathIndex: number[]) => void
     selectFolder: (pathIndex: number[], selected: boolean) => void
     toggleBranch: (newBranch: string) => Promise<void>
+    deselectAll: () => void
 }
 
 export function useRepositoryController(): RepositoryController {
@@ -64,6 +65,7 @@ export function useRepositoryController(): RepositoryController {
         container,
         loadContainer,
         updateMetaData,
+        updateAllMetaData,
     } = useContainer<MetaData>(initMetaData)
 
     const initRepository = async (url: string) => {
@@ -138,6 +140,12 @@ export function useRepositoryController(): RepositoryController {
         return { ...file.metaData, selected }
     }
 
+    const deselectAll = () => {
+        updateAllMetaData((file) => ({ ...file.metaData, selected: false }))
+        setCantFilesSelected(0)
+        setCantFoldersSelected(0)
+    }
+
     useEffect(() => {
         setLoading(loadingBranches || loadingContainer || loadingRepository)
     }, [loadingContainer, loadingBranches, loadingRepository])
@@ -157,5 +165,6 @@ export function useRepositoryController(): RepositoryController {
         toggleSelectItem,
         selectFolder,
         toggleBranch,
+        deselectAll,
     }
 }

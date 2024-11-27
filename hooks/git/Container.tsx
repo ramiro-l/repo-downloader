@@ -70,6 +70,18 @@ export function useContainer<TMetaData>(initMetadata: TMetaData) {
         }
     }
 
+    function updateAllMetaData(updateFn: (file: File<TMetaData>) => TMetaData) {
+        const update = (files: File<TMetaData>[]) => {
+            files.forEach((file) => {
+                file.metaData = updateFn(file)
+                if (file.isDirectory()) {
+                    update(file.content)
+                }
+            })
+        }
+        update(container)
+    }
+
     return {
         container,
         loading,
@@ -77,5 +89,6 @@ export function useContainer<TMetaData>(initMetadata: TMetaData) {
         loadContainer,
         updateMetaData,
         collectFilteredFiles,
+        updateAllMetaData,
     }
 }
