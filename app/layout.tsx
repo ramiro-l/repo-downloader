@@ -8,8 +8,39 @@ import DotPattern from "@/components/ui/dot-pattern"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
+import ogImage from "@/app/og.png"
 
 export const metadata: Metadata = {
+    metadataBase: new URL(siteConfig.url),
+    openGraph: {
+        title: siteConfig.name,
+        description: siteConfig.description,
+        siteName: siteConfig.name,
+        type: "website",
+        locale: "en_US",
+        url: siteConfig.url,
+        images: [
+            {
+                url: ogImage.src,
+                width: ogImage.width,
+                height: ogImage.height,
+            },
+        ],
+    },
+    robots: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+        googleBot: "index, follow",
+    },
+    applicationName: siteConfig.name,
+    appleWebApp: {
+        title: siteConfig.name,
+        statusBarStyle: "default",
+        capable: true,
+    },
     title: {
         default: siteConfig.name,
         template: `%s - ${siteConfig.name}`,
@@ -19,9 +50,21 @@ export const metadata: Metadata = {
         { media: "(prefers-color-scheme: light)", color: "white" },
         { media: "(prefers-color-scheme: dark)", color: "black" },
     ],
+    twitter: {
+        card: "summary_large_image",
+        title: siteConfig.name,
+        description: siteConfig.description,
+        creator: "@rami_lugo",
+        images: [
+            {
+                url: ogImage.src,
+                width: ogImage.width,
+                height: ogImage.height,
+            },
+        ],
+    },
     icons: {
         icon: "/favicon.ico",
-        // shortcut: "/favicon-16x16.png",
         apple: "/apple-touch-icon.png",
     },
 }
