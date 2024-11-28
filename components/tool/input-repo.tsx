@@ -54,6 +54,7 @@ export default function InputRepo() {
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         placeholder="Paste the git repository URL"
+                        className="pr-8"
                     />
                     {url && (
                         <button

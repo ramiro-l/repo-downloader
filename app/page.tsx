@@ -18,7 +18,8 @@ export default async function IndexPage() {
                         <a
                             href={siteConfig.links.me}
                             target="_blank"
-                            className=" underline hover:text-accent-foreground" rel="noreferrer"
+                            className=" underline hover:text-accent-foreground"
+                            rel="noreferrer"
                         >
                             ramiro-l
                         </a>
