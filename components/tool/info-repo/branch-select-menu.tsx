@@ -18,7 +18,7 @@ export default function BranchSelectMenu() {
                 toggleBranch(value)
             }}
         >
-            <SelectTrigger id="select-15">
+            <SelectTrigger id="select-15" className="truncate">
                 <div className="flex items-center gap-2 truncate">
                     <GitBranch className="size-4" />
                     <div className="w-[90%] truncate text-left">
