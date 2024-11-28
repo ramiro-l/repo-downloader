@@ -18,12 +18,17 @@ export function useBranches(loadContainer: (branch: string) => Promise<void>) {
         initBranch?: string
     ): Promise<string> => {
         setLoading(true)
-        const branches = await getGithubBranches(owner, repo)
-        setBranches(branches)
-        const firstBranch = initBranch ?? initBranchSelected(branches)
-        setBranchSelected(firstBranch)
-        setLoading(false)
-        return firstBranch
+        try {
+            const branches = await getGithubBranches(owner, repo)
+            setBranches(branches)
+            const firstBranch = initBranch ?? initBranchSelected(branches)
+            setBranchSelected(firstBranch)
+            setLoading(false)
+            return firstBranch
+        } catch (error) {
+            setLoading(false)
+            throw error
+        }
     }
 
     const initBranchSelected = (banches: string[]): string => {

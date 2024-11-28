@@ -77,25 +77,28 @@ export function useRepositoryController(): RepositoryController {
 
     const initRepository = async (url: string) => {
         setLoadingRepository(true)
-        setCantFilesSelected(0)
-        setCantFoldersSelected(0)
-        if (isGithubUrl(url)) {
-            const urlInfo = getGithubUrlInfo(url)
-            const { owner, repo } = urlInfo
-            setOwner(owner)
-            setRepo(repo)
+        try {
             setCantFilesSelected(0)
             setCantFoldersSelected(0)
-            const branch = await initBranches(owner, repo, urlInfo.branch)
-            setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
-            setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
-            await loadContainer(owner, repo, branch)
+            if (isGithubUrl(url)) {
+                const urlInfo = getGithubUrlInfo(url)
+                const { owner, repo } = urlInfo
+                setOwner(owner)
+                setRepo(repo)
+                setCantFilesSelected(0)
+                setCantFoldersSelected(0)
+                const branch = await initBranches(owner, repo, urlInfo.branch)
+                setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
+                setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
+                await loadContainer(owner, repo, branch)
+                setLoadingRepository(false)
+            } else {
+                throw new Error("Invalid repository URL.")
+            }
+        } catch (error) {
             setLoadingRepository(false)
-        } else {
-            setLoadingRepository(false)
-            throw new Error("Invalid repository URL.")
+            throw error
         }
-        setLoadingRepository(false)
     }
 
     const toggleSelectItem = (pathIndex: number[]) => {

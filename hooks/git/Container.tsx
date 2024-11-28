@@ -19,15 +19,20 @@ export function useContainer<TMetaData>(initMetadata: TMetaData) {
         branch: string
     ) => {
         setLoading(true)
-        const data = await getGithubFiles<TMetaData>(
-            owner,
-            repo,
-            initMetadata,
-            branch
-        )
-        setContainer(data.files)
-        setRootId(data.rootId)
-        setLoading(false)
+        try {
+            const data = await getGithubFiles<TMetaData>(
+                owner,
+                repo,
+                initMetadata,
+                branch
+            )
+            setContainer(data.files)
+            setRootId(data.rootId)
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            throw error
+        }
     }
 
     const updateMetaData = (
