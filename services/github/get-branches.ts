@@ -1,10 +1,12 @@
-import { GITHUB_API_URL } from "@/services/github/const";
+import { GITHUB_API_URL } from "@/services/github/const"
 
 export const getGithubBranches = async (
     owner: string,
     repo: string
 ): Promise<string[]> => {
-    const response = await fetch(`${GITHUB_API_URL}/repos/${owner}/${repo}/branches`)
+    const response = await fetch(
+        `${GITHUB_API_URL}/repos/${owner}/${repo}/branches`
+    )
 
     if (!response.ok) {
         throw new Error("Failed to get branches")

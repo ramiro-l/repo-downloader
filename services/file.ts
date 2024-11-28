@@ -1,35 +1,35 @@
 interface IFile<TMetaData> {
-    id: string;
-    name: string;
-    size: number;
-    path: string[];
-    type: "file" | "dir";
-    metaData?: TMetaData;
-    pathIndex?: number[];
-    content?: File<TMetaData>[];
-    downloadUrl?: string;
+    id: string
+    name: string
+    size: number
+    path: string[]
+    type: "file" | "dir"
+    metaData?: TMetaData
+    pathIndex?: number[]
+    content?: File<TMetaData>[]
+    downloadUrl?: string
 }
 
 class File<TMetaData> implements IFile<TMetaData> {
-    id: string;
-    name: string;
-    size: number;
-    path: string[]; // path not including the file name
-    pathIndex: number[] = []; // use for search in File[]
-    type: "file" | "dir";
-    metaData: TMetaData;
-    _content?: File<TMetaData>[];
-    _downloadUrl?: string;
+    id: string
+    name: string
+    size: number
+    path: string[] // path not including the file name
+    pathIndex: number[] = [] // use for search in File[]
+    type: "file" | "dir"
+    metaData: TMetaData
+    _content?: File<TMetaData>[]
+    _downloadUrl?: string
 
     constructor(item: IFile<TMetaData>, initMetaData: TMetaData) {
-        this.id = item.id;
-        this.name = item.name;
-        this.size = item.size;
-        this.path = item.path;
-        this.type = item.type;
-        this._content = item.content;
-        this.metaData = initMetaData;
-        this._downloadUrl = item.downloadUrl;
+        this.id = item.id
+        this.name = item.name
+        this.size = item.size
+        this.path = item.path
+        this.type = item.type
+        this._content = item.content
+        this.metaData = initMetaData
+        this._downloadUrl = item.downloadUrl
     }
 
     public get content(): File<TMetaData>[] {
@@ -39,13 +39,15 @@ class File<TMetaData> implements IFile<TMetaData> {
     }
 
     public get downloadUrl(): string {
-        if (this.isDirectory()) throw new Error("Directory does not have download URL")
+        if (this.isDirectory())
+            throw new Error("Directory does not have download URL")
         if (!this._downloadUrl) throw new Error("Download URL is undefined")
         return this._downloadUrl
     }
 
     pushPathIndex(newIndex: number) {
-        if (this.pathIndex.length > this.path.length) throw new Error("Index exceeds path length")
+        if (this.pathIndex.length > this.path.length)
+            throw new Error("Index exceeds path length")
         this.pathIndex.push(newIndex)
     }
 
@@ -67,42 +69,46 @@ class File<TMetaData> implements IFile<TMetaData> {
     }
 }
 
-function searchFile<TMetaData>(pathIndex: number[], files: File<TMetaData>[]): {
-    file: File<TMetaData>, parents?: File<TMetaData>[]
+function searchFile<TMetaData>(
+    pathIndex: number[],
+    files: File<TMetaData>[]
+): {
+    file: File<TMetaData>
+    parents?: File<TMetaData>[]
 } {
-    const parents: File<TMetaData>[] = [];
-    let currentFiles = files;
+    const parents: File<TMetaData>[] = []
+    let currentFiles = files
 
     for (const index of pathIndex.slice(0, -1)) {
         if (index >= currentFiles.length) throw new Error("Index out of bounds")
 
-        const file = currentFiles[index];
-        currentFiles = file.content;
-        parents.push(file);
+        const file = currentFiles[index]
+        currentFiles = file.content
+        parents.push(file)
     }
 
-    const lastIndex = pathIndex[pathIndex.length - 1];
-    if (lastIndex >= currentFiles.length) throw new Error("Index out of bounds");
+    const lastIndex = pathIndex[pathIndex.length - 1]
+    if (lastIndex >= currentFiles.length) throw new Error("Index out of bounds")
     return {
         file: currentFiles[lastIndex],
-        parents: parents
-    };
+        parents: parents,
+    }
 }
 
 function collectFilteredFiles<TMetaData>(
     condFn: (file: File<TMetaData>) => boolean,
     files: File<TMetaData>[]
 ): File<TMetaData>[] {
-    const result: File<TMetaData>[] = [];
+    const result: File<TMetaData>[] = []
     for (const file of files) {
         if (condFn(file)) {
-            result.push(file);
+            result.push(file)
         }
         if (file.isDirectory()) {
-            result.push(...collectFilteredFiles(condFn, file.content));
+            result.push(...collectFilteredFiles(condFn, file.content))
         }
     }
-    return result;
+    return result
 }
 
-export { File, type IFile, searchFile, collectFilteredFiles };
+export { File, type IFile, searchFile, collectFilteredFiles }
