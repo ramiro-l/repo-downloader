@@ -22,7 +22,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import scrollToBottom from "@/components/scrollBottom"
+import { scrollToBottom } from "@/components/scroll"
 
 type TreeViewElement = {
     id: string

@@ -8,7 +8,7 @@ import { CircleX, SearchCode } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
-import scrollToBottom from "@/components/scrollBottom"
+import { scrollToBottom } from "@/components/scroll"
 
 export default function InputRepo() {
     const { initRepository, loading } = useRepository()
@@ -54,7 +54,7 @@ export default function InputRepo() {
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         placeholder="Paste the git repository URL"
-                        className="pr-8"
+                        className="pr-8 border-input"
                     />
                     {url && (
                         <button
