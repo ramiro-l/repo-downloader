@@ -24,12 +24,12 @@ function Tool() {
                 id="tool"
                 className={`relative flex flex-col gap-2 transition-all duration-300 ${
                     isLoadingOrEmpty
-                        ? "h-0 -translate-y-5 scale-90 opacity-0 !absolute"
+                        ? "!absolute h-0 -translate-y-5 scale-90 opacity-0"
                         : "translate-y-0 scale-100 opacity-100"
                 }`}
             >
                 <CardInfoRepo />
-                <div className="flex md:max-h-[85vh] gap-2 max-md:flex-col">
+                <div className="flex gap-2 max-md:flex-col md:max-h-[85vh]">
                     <CardContainer />
                     <SelectedItemsDownloader />
                 </div>
