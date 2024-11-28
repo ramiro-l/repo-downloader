@@ -1,4 +1,4 @@
-# Github Downloader
+# Repo Downloader
 
 ![preview](./app/og.png)
 
