@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-    url: "",
+    url: "https://github-downloader.pages.dev",
     name: "github-downloader",
     description: "Fast download content for all public github repositories.",
     links: {
