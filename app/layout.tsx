@@ -90,7 +90,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 >
                     <div className="relative flex min-h-screen flex-col overflow-hidden">
                         <SiteHeader />
-                        <div className="flex-1 z-10">{children}</div>
+                        <div className="z-10 flex-1">{children}</div>
                         <DotPattern
                             width={20}
                             height={20}
@@ -98,7 +98,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                             cy={1.25}
                             cr={1.25}
                             className={cn(
-                                "z-0 dark:opacity-50 left-2 top-1.5",
+                                "left-2 top-1.5 z-0 dark:opacity-50",
                                 "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] "
                             )}
                         />

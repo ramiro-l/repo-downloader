@@ -22,7 +22,7 @@ export default function DownloadRepositoryButton() {
                             aria-label="Download all repository"
                             className="aspect-square hover:bg-primary hover:text-white"
                         >
-                            <Download className="h-4 w-4 " />
+                            <Download className="size-4 " />
                         </Button>
                     </a>
                 </TooltipTrigger>

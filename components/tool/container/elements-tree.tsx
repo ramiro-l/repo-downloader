@@ -55,9 +55,9 @@ export default function ElementsTree({
                                 <TooltipTrigger>{file.name}</TooltipTrigger>
                                 <TooltipContent
                                     side="right"
-                                    className={`h-4 flex justify-center items-center text-xs py-0 shadow-none ${
+                                    className={`flex h-4 items-center justify-center py-0 text-xs shadow-none ${
                                         file.metaData?.selected &&
-                                        "bg-primary ml-2  border-primary text-white"
+                                        "ml-2 border-primary  bg-primary text-white"
                                     }`}
                                 >
                                     <p>

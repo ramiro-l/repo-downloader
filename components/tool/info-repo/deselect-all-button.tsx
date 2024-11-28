@@ -20,9 +20,9 @@ export default function DeselectAllButton() {
                         variant="outline"
                         size="icon"
                         aria-label="Deselect all files"
-                        className="hover:bg-red-500 hover:text-white aspect-square"
+                        className="aspect-square hover:bg-red-500 hover:text-white"
                     >
-                        <X className="h-4 w-4" />
+                        <X className="size-4" />
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent className="border border-input bg-popover px-2 py-1 text-xs">

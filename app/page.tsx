@@ -3,14 +3,14 @@ import ContainerTool from "@/components/tool/container-tool"
 
 export default async function IndexPage() {
     return (
-        <section className="container grid items-center gap-6  pt-6 md:pt-10 pb-8 xl:px-64 lg:px-32">
-            <div className="flex max-w-[980px] flex-col items-start gap-2 max-lg:!max-w-full max-lg:text-center max-lg:items-center">
-                <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl text-balance">
+        <section className="container grid items-center gap-6  pb-8 pt-6 md:pt-10 lg:px-32 xl:px-64">
+            <div className="flex max-w-[980px] flex-col items-start gap-2 max-lg:!max-w-full max-lg:items-center max-lg:text-center">
+                <h1 className="text-balance text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
                     Fast download content
                     <br className="max-lg:hidden" /> for all public github
                     repositories.
                 </h1>
-                <p className=" text-lg text-muted-foreground max-lg:max-w-[400px]  text-balance">
+                <p className=" text-balance text-lg text-muted-foreground  max-lg:max-w-[400px]">
                     Search for a repository, choose the files and folders, and
                     download them instantly. <br className="lg:hidden" />
                     <span className=" text-nowrap">
@@ -18,7 +18,7 @@ export default async function IndexPage() {
                         <a
                             href={siteConfig.links.me}
                             target="_blank"
-                            className=" underline hover:text-accent-foreground"
+                            className=" underline hover:text-accent-foreground" rel="noreferrer"
                         >
                             ramiro-l
                         </a>

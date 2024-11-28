@@ -173,7 +173,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
                 <div className={cn("size-full", className)}>
                     <ScrollArea
                         ref={ref}
-                        className="h-full relative px-2"
+                        className="relative h-full px-2"
                         dir={dir as Direction}
                     >
                         <AccordionPrimitive.Root
@@ -212,7 +212,7 @@ const TreeIndicator = forwardRef<
             dir={direction}
             ref={ref}
             className={cn(
-                "h-full w-px bg-muted absolute left-1.5 rtl:right-1.5 py-3 rounded-md hover:bg-slate-300 duration-300 ease-in-out",
+                "absolute left-1.5 h-full w-px rounded-md bg-muted py-3 duration-300 ease-in-out hover:bg-slate-300 rtl:right-1.5",
                 className
             )}
             {...props}
@@ -266,11 +266,11 @@ const Folder = forwardRef<
             <AccordionPrimitive.Item
                 {...props}
                 value={value}
-                className="relative overflow-hidden h-full "
+                className="relative h-full overflow-hidden "
             >
                 <AccordionPrimitive.Trigger
                     className={cn(
-                        `flex items-center gap-1 text-sm rounded-md `,
+                        `flex items-center gap-1 rounded-md text-sm `,
                         className,
                         {
                             "cursor-pointer": isSelectable,
@@ -282,7 +282,7 @@ const Folder = forwardRef<
                 >
                     <div
                         className={cn(
-                            "flex gap-1 justify-center items-center px-1",
+                            "flex items-center justify-center gap-1 px-1",
                             {
                                 "bg-primary rounded-md text-white":
                                     isSelect && isSelectable,
@@ -305,10 +305,10 @@ const Folder = forwardRef<
                         <span>{element}</span>
                     </div>
                     {expandedItems?.includes(value) && (
-                        <div className="flex gap-1 select-none">
+                        <div className="flex select-none gap-1">
                             <Button
                                 variant="outline"
-                                className="h-2 text-xs px-1 uppercase dark:border-white hover:bg-black hover:text-white hover:border-black dark:hover:bg-secondary-foreground dark:hover:text-secondary dark:hover:border-secondary-foreground "
+                                className="h-2 px-1 text-xs uppercase hover:border-black hover:bg-black hover:text-white dark:border-white dark:hover:border-secondary-foreground dark:hover:bg-secondary-foreground dark:hover:text-secondary "
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     handelButtonSelectAll?.(value)
@@ -318,7 +318,7 @@ const Folder = forwardRef<
                             </Button>
                             <Button
                                 variant="outline"
-                                className="h-2 text-xs px-0 uppercase hover:bg-red-600 hover:!border-red-600 hover:text-white dark:border-white"
+                                className="h-2 px-0 text-xs uppercase hover:!border-red-600 hover:bg-red-600 hover:text-white dark:border-white"
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     handleButtonDeslectAll?.(value)
@@ -329,14 +329,14 @@ const Folder = forwardRef<
                         </div>
                     )}
                 </AccordionPrimitive.Trigger>
-                <AccordionPrimitive.Content className="text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative overflow-hidden h-full">
+                <AccordionPrimitive.Content className="relative h-full overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                     {element && indicator && (
                         <TreeIndicator aria-hidden="true" />
                     )}
                     <AccordionPrimitive.Root
                         dir={direction}
                         type="multiple"
-                        className="flex flex-col gap-1 py-1 ml-5 rtl:mr-5 "
+                        className="ml-5 flex flex-col gap-1 py-1 rtl:mr-5 "
                         defaultValue={expandedItems}
                         value={expandedItems}
                         onValueChange={(value) => {
@@ -390,13 +390,13 @@ const File = forwardRef<
                     disabled={!isSelectable}
                     aria-label="File"
                     className={cn(
-                        "flex items-center gap-1 cursor-pointer text-sm px-1 rtl:pl-1 rtl:pr-0 rounded-md  duration-200 ease-in-out",
+                        "flex cursor-pointer items-center gap-1 rounded-md px-1 text-sm duration-200 ease-in-out  rtl:pl-1 rtl:pr-0",
                         {
                             "bg-primary text-white": isSelected && isSelectable,
                         },
                         isSelectable
                             ? "cursor-pointer"
-                            : "opacity-50 cursor-not-allowed",
+                            : "cursor-not-allowed opacity-50",
                         className
                     )}
                     onClick={() => {
@@ -456,7 +456,7 @@ const CollapseButton = forwardRef<
     return (
         <Button
             variant={"ghost"}
-            className="h-8 w-fit p-1 absolute bottom-1 right-2"
+            className="absolute bottom-1 right-2 h-8 w-fit p-1"
             onClick={
                 expandedItems && expandedItems.length > 0
                     ? closeAll

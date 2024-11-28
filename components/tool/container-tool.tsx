@@ -14,22 +14,21 @@ function Tool() {
     return (
         <>
             <div
-                className={`transition-all duration-200 transform z-50 ${
+                className={`z-50 transition-all duration-200${
                     isLoadingOrEmpty ? "translate-y-20" : "-translate-y-0"
                 }`}
             >
                 <InputRepo />
             </div>
             <div
-                className={`flex flex-col relative gap-2 transition-all duration-300 transform 
-                    ${
+                className={`relative flex flex-col gap-2 transition-all duration-300${
                         isLoadingOrEmpty
-                            ? "opacity-0 -translate-y-5 scale-90 h-0"
-                            : "opacity-100 translate-y-0 scale-100"
+                            ? "h-0 -translate-y-5 scale-90 opacity-0"
+                            : "translate-y-0 scale-100 opacity-100"
                     }`}
             >
                 <CardInfoRepo />
-                <div className="flex gap-2 !max-h-[85vh] max-md:flex-col">
+                <div className="flex !max-h-[85vh] gap-2 max-md:flex-col">
                     <CardContainer />
                     <SelectedItemsDownloader />
                 </div>

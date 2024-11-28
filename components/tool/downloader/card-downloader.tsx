@@ -33,12 +33,12 @@ export default function SelectedItemsDownloader() {
     }
 
     return (
-        <div className="border border-input flex flex-col justify-center rounded-xl p-10 dark:bg-background bg-slate-100 w-1/3 max-md:w-full max-md:px-4 max-md:py-2">
-            <p className=" text-lg font-semibold text-center max-md:hidden">
+        <div className="flex w-1/3 flex-col justify-center rounded-xl border border-input bg-slate-100 p-10 dark:bg-background max-md:w-full max-md:px-4 max-md:py-2">
+            <p className=" text-center text-lg font-semibold max-md:hidden">
                 Export Selected
             </p>
             <Button
-                className="mt-2 flex items-center gap-2 z-40"
+                className="z-40 mt-2 flex items-center gap-2"
                 onClick={handleDownload}
             >
                 {!loading ? (
@@ -54,7 +54,7 @@ export default function SelectedItemsDownloader() {
                 )}{" "}
             </Button>
             <p
-                className={` transition-all duration-75 text-center text-sm py-1 rounded-md text-secondary-foreground/75 ${
+                className={` rounded-md py-1 text-center text-sm text-secondary-foreground/75 transition-all duration-75 ${
                     notSelectedItemsTrigger &&
                     "font-medium !text-secondary-foreground"
                 }`}

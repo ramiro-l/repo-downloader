@@ -47,8 +47,8 @@ export default function InputRepo() {
     }
 
     return (
-        <div className="flex gap-2 mb-4 max-lg:flex-col z-50">
-            <div className="flex-col w-full ">
+        <div className="z-50 mb-4 flex gap-2 max-lg:flex-col">
+            <div className="w-full flex-col ">
                 <div className="relative">
                     <Input
                         value={url}
@@ -70,14 +70,14 @@ export default function InputRepo() {
                     )}
                 </div>
                 {errorMessages && (
-                    <span className="text-red-500 text-sm ml-1 duration-200 transition-all">
+                    <span className="ml-1 text-sm text-red-500 transition-all duration-200">
                         {errorMessages}
                     </span>
                 )}
             </div>
             <Button
                 onClick={handleSubmit}
-                className="w-1/6 max-lg:w-auto flex gap-2 items-center"
+                className="flex w-1/6 items-center gap-2 max-lg:w-auto"
             >
                 {!loading ? <SearchCode size={24} /> : <Spinner size="small" />}
                 <span>{!loading ? "Search" : "Loading"}</span>

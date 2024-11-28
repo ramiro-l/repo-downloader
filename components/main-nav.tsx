@@ -8,8 +8,8 @@ export function MainNav() {
     return (
         <div className="flex gap-6 md:gap-10">
             <Link href="/" className="flex items-center space-x-2">
-                <Icons.Logo className="size-6 mb-1" />
-                <span className="inline-block font-bold font-mono">
+                <Icons.Logo className="mb-1 size-6" />
+                <span className="inline-block font-mono font-bold">
                     {siteConfig.name}
                 </span>
             </Link>

@@ -10,9 +10,9 @@ export default function CardContainer() {
     const { container, toggleSelectItem, selectFolder, loading } =
         useRepository()
     return (
-        <div className="flex items-center border border-input rounded-xl px-1 py-2 dark:bg-background bg-slate-100 w-2/3 max-md:w-full">
+        <div className="flex w-2/3 items-center rounded-xl border border-input bg-slate-100 px-1 py-2 dark:bg-background max-md:w-full">
             {container.length === 0 || loading ? (
-                <div className="w-full flex justify-center">
+                <div className="flex w-full justify-center">
                     <Spinner size="small" />
                 </div>
             ) : (

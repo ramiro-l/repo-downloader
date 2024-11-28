@@ -20,7 +20,7 @@ export default function BranchSelectMenu() {
         >
             <SelectTrigger id="select-15">
                 <div className="flex items-center gap-2 truncate">
-                    <GitBranch className="h-4 w-4" />
+                    <GitBranch className="size-4" />
                     <div className="w-[90%] truncate text-left">
                         <SelectValue placeholder="Select branch" />
                     </div>
