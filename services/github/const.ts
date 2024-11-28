@@ -77,6 +77,9 @@ const isGithubTree = (element: any): element is IGithubTree => {
 }
 
 const isGithubTreeItem = (element: any): element is IGithubTreeItem => {
+    if (element.mode === "160000") {
+        throw new Error("Submodules are not supported.")
+    }
     return (
         typeof element === "object" &&
         element !== null &&
