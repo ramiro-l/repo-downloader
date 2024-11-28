@@ -14,18 +14,18 @@ function Tool() {
     return (
         <>
             <div
-                className={`z-50 transition-all duration-200${
+                className={`z-50 transition-all duration-200 ${
                     isLoadingOrEmpty ? "translate-y-20" : "-translate-y-0"
                 }`}
             >
                 <InputRepo />
             </div>
             <div
-                className={`relative flex flex-col gap-2 transition-all duration-300${
-                        isLoadingOrEmpty
-                            ? "h-0 -translate-y-5 scale-90 opacity-0"
-                            : "translate-y-0 scale-100 opacity-100"
-                    }`}
+                className={`relative flex flex-col gap-2 transition-all duration-300 ${
+                    isLoadingOrEmpty
+                        ? "h-0 -translate-y-5 scale-90 opacity-0"
+                        : "translate-y-0 scale-100 opacity-100"
+                }`}
             >
                 <CardInfoRepo />
                 <div className="flex !max-h-[85vh] gap-2 max-md:flex-col">
