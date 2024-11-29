@@ -3,7 +3,7 @@ interface IFile<TMetaData> {
     name: string
     size: number
     path: string[]
-    type: "file" | "dir"
+    type: "file" | "dir" | "symlink"
     metaData?: TMetaData
     pathIndex?: number[]
     content?: File<TMetaData>[]
@@ -16,7 +16,7 @@ class File<TMetaData> implements IFile<TMetaData> {
     size: number
     path: string[] // path not including the file name
     pathIndex: number[] = [] // use for search in File[]
-    type: "file" | "dir"
+    type: "file" | "dir" | "symlink"
     metaData: TMetaData
     _content?: File<TMetaData>[]
     _downloadUrl?: string
@@ -61,6 +61,10 @@ class File<TMetaData> implements IFile<TMetaData> {
 
     isFile() {
         return this.type === "file"
+    }
+
+    isSymlink() {
+        return this.type === "symlink"
     }
 
     isChildOf(file: File<TMetaData>) {

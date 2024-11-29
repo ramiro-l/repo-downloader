@@ -1,5 +1,5 @@
 import { IFile } from "@/services/file"
-import { GithubTreeItem } from "@/services/github/const"
+import { GithubTreeItem, GithubTreeItemMode } from "@/services/github/const"
 import { getGithubRawUrl } from "@/services/github/parsers"
 
 export const adaptGithubItemForFile = <TMetaData>(
@@ -9,10 +9,10 @@ export const adaptGithubItemForFile = <TMetaData>(
     branch: string
 ): IFile<TMetaData> => {
     const pathParts = item.path.split("/")
-    const isDirectory = item.type === "tree"
+    const type = parseType(item)
     const fileName = pathParts.pop()
     let downloadUrl: string | undefined = undefined
-    if (!isDirectory) {
+    if (type !== "dir") {
         downloadUrl = getGithubRawUrl(owner, repo, branch, item.path)
     }
     if (!fileName) throw new Error("Invalid path structure")
@@ -22,8 +22,14 @@ export const adaptGithubItemForFile = <TMetaData>(
         path: pathParts,
         name: fileName,
         size: item.size,
-        type: isDirectory ? "dir" : "file",
-        content: isDirectory ? [] : undefined,
+        type: type,
+        content: type === "dir" ? [] : undefined,
         downloadUrl: downloadUrl,
     }
+}
+
+const parseType = (item: GithubTreeItem): "file" | "dir" | "symlink" => {
+    if (item.type === "tree") return "dir"
+    if (item.mode === GithubTreeItemMode.SYMLINK) return "symlink"
+    return "file"
 }

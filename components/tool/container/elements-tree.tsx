@@ -1,5 +1,6 @@
 import { File as FileItem } from "@/services/file"
 import { filesize } from "filesize"
+import { FileIcon, FileSymlink } from "lucide-react"
 
 import { MetaData } from "@/hooks/git/RepositoryController"
 import { File, Folder } from "@/components/ui/file-tree"
@@ -49,6 +50,7 @@ export default function ElementsTree({
                         value={file.id}
                         isSelect={file.metaData?.selected}
                         handleSelect={() => toggleSelectItem(file.pathIndex)}
+                        fileIcon={getFileIcon(file.type)}
                     >
                         <TooltipProvider delayDuration={800}>
                             <Tooltip>
@@ -64,6 +66,7 @@ export default function ElementsTree({
                                         {filesize(file.size, {
                                             fullform: file.size < 1000,
                                         })}
+                                        {file.isSymlink() && " -> " + "symlink"}
                                     </p>
                                 </TooltipContent>
                             </Tooltip>
@@ -73,4 +76,15 @@ export default function ElementsTree({
             )}
         </>
     )
+}
+
+const getFileIcon = (type: "file" | "symlink") => {
+    switch (type) {
+        case "file":
+            return <FileIcon className="size-4" />
+        case "symlink":
+            return <FileSymlink className="size-4" />
+        default:
+            return null
+    }
 }
