@@ -20,7 +20,7 @@ export default function DownloadRepositoryButton() {
                             variant="outline"
                             size="icon"
                             aria-label="Download all repository"
-                            className="aspect-square hover:bg-primary hover:text-white"
+                            className="aspect-square hover:border-primary hover:bg-primary hover:text-white"
                         >
                             <Download className="size-4 " />
                         </Button>
