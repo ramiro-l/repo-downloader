@@ -87,10 +87,10 @@ export async function githubTreeToFiles<TMetaData>(
 }
 
 const orderTreeItems = (a: GithubTreeItem, b: GithubTreeItem) => {
-    if (a.type === "tree" && b.type === "blob") {
+    if ((a.type === "tree" || a.type === "commit") && b.type === "blob") {
         return -1
     }
-    if (a.type === "blob" && b.type === "tree") {
+    if (a.type === "blob" && (b.type === "tree" || b.type === "commit")) {
         return 1
     }
     return a.path.localeCompare(b.path)
