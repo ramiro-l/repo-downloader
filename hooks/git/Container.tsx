@@ -16,7 +16,8 @@ export function useContainer<TMetaData>(initMetadata: TMetaData) {
     const loadContainer = async (
         owner: string,
         repo: string,
-        branch: string
+        branch: string,
+        fetchSubmodules: boolean
     ) => {
         setLoading(true)
         try {
@@ -24,7 +25,8 @@ export function useContainer<TMetaData>(initMetadata: TMetaData) {
                 owner,
                 repo,
                 initMetadata,
-                branch
+                branch,
+                fetchSubmodules
             )
             setContainer(data.files)
             setRootId(data.rootId)

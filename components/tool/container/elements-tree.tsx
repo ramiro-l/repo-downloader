@@ -13,10 +13,12 @@ import {
 
 export default function ElementsTree({
     container,
+    areSubmodulesFetched,
     toggleSelectItem,
     selectFolder,
 }: Readonly<{
     container: FileItem<MetaData>[]
+    areSubmodulesFetched: boolean
     toggleSelectItem: (pathIndex: number[]) => void
     selectFolder: (pathIndex: number[], selected: boolean) => void
 }>) {
@@ -28,6 +30,7 @@ export default function ElementsTree({
                         key={file.id}
                         value={file.id}
                         element={file.name}
+                        isSelectable={!file.isSubmodule || areSubmodulesFetched}
                         isSelect={file.metaData?.selected}
                         folderIconCloseNotSelected={
                             file.isSubmodule ? (
@@ -44,6 +47,7 @@ export default function ElementsTree({
                         {file.content.length > 0 && (
                             <ElementsTree
                                 container={file.content}
+                                areSubmodulesFetched={areSubmodulesFetched}
                                 toggleSelectItem={toggleSelectItem}
                                 selectFolder={selectFolder}
                             />

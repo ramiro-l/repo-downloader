@@ -7,8 +7,13 @@ import { Spinner } from "@/components/ui/spinner"
 import ElementsTree from "@/components/tool/container/elements-tree"
 
 export default function CardContainer() {
-    const { container, toggleSelectItem, selectFolder, loading } =
-        useRepository()
+    const {
+        container,
+        toggleSelectItem,
+        selectFolder,
+        loading,
+        fetchSubmodules,
+    } = useRepository()
     return (
         <div className="flex w-2/3 items-center rounded-xl border border-input bg-slate-100 px-1 py-2 dark:bg-background max-md:w-full">
             {container.length === 0 || loading ? (
@@ -19,6 +24,7 @@ export default function CardContainer() {
                 <Tree>
                     <ElementsTree
                         container={container}
+                        areSubmodulesFetched={fetchSubmodules}
                         toggleSelectItem={toggleSelectItem}
                         selectFolder={selectFolder}
                     />

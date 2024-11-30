@@ -30,7 +30,8 @@ export interface RepositoryController {
     cantFilesSelected: number
     cantFoldersSelected: number
     downloadRepoUrl: string
-    initRepository: (url: string) => Promise<void>
+    fetchSubmodules: boolean
+    initRepository: (url: string, fetchSubmodules: boolean) => Promise<void>
     toggleSelectItem: (pathIndex: number[]) => void
     selectFolder: (pathIndex: number[], selected: boolean) => void
     toggleBranch: (newBranch: string) => Promise<void>
@@ -47,13 +48,14 @@ export function useRepositoryController(): RepositoryController {
     const [cantFilesSelected, setCantFilesSelected] = useState<number>(0)
     const [cantFoldersSelected, setCantFoldersSelected] = useState<number>(0)
     const [downloadRepoUrl, setDownloadRepoUrl] = useState<string>("")
+    const [fetchSubmodules, setFetchSubmodules] = useState<boolean>(false)
 
     const fetchContainerForBranch = async (branch: string) => {
         if (!owner) throw new Error("Owner not set")
         if (!repo) throw new Error("Repo not set")
         setCantFilesSelected(0)
         setCantFoldersSelected(0)
-        await loadContainer(owner, repo, branch)
+        await loadContainer(owner, repo, branch, fetchSubmodules)
         setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
         setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
     }
@@ -75,7 +77,7 @@ export function useRepositoryController(): RepositoryController {
         collectFilteredFiles,
     } = useContainer<MetaData>(initMetaData)
 
-    const initRepository = async (url: string) => {
+    const initRepository = async (url: string, fetchSubmodules: boolean) => {
         setLoadingRepository(true)
         try {
             setCantFilesSelected(0)
@@ -90,7 +92,8 @@ export function useRepositoryController(): RepositoryController {
                 const branch = await initBranches(owner, repo, urlInfo.branch)
                 setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
                 setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
-                await loadContainer(owner, repo, branch)
+                await loadContainer(owner, repo, branch, fetchSubmodules)
+                setFetchSubmodules(fetchSubmodules)
                 setLoadingRepository(false)
             } else {
                 throw new Error("Invalid repository URL.")
@@ -183,6 +186,7 @@ export function useRepositoryController(): RepositoryController {
         cantFilesSelected,
         cantFoldersSelected,
         downloadRepoUrl,
+        fetchSubmodules,
         initRepository,
         toggleSelectItem,
         selectFolder,

@@ -15,7 +15,8 @@ export async function getGithubFiles<TMetaData>(
     owner: string,
     repo: string,
     initMetadata: TMetaData,
-    branch: string
+    branch: string,
+    fetchSubmodules: boolean
 ): Promise<{
     files: File<TMetaData>[]
     rootId: string
@@ -28,7 +29,11 @@ export async function getGithubFiles<TMetaData>(
         repo,
         branch
     )
-    await addSubmoduleFiles(files, initMetadata, data.submodules)
+
+    if (fetchSubmodules) {
+        await addSubmoduleFiles(files, initMetadata, data.submodules)
+    }
+
     return {
         files: files,
         rootId: data.githubTree.sha,
