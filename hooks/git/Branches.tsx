@@ -26,8 +26,11 @@ export function useBranches(loadContainer: (branch: string) => Promise<void>) {
             setBranchSelected(firstBranch)
             setLoading(false)
             return firstBranch
-        } catch (error) {
+        } catch (error: Error | any) {
             setLoading(false)
+            if (error?.message === "Failed to get branches") {
+                throw new Error("Repository not found.")
+            }
             throw error
         }
     }

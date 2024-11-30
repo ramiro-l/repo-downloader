@@ -36,6 +36,11 @@ export default function InputRepo() {
         }
     }, [getSubmodules, fetchSubmodules])
 
+    const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (errorMessages) setErrorMessages("")
+        setUrl(e.target.value)
+    }
+
     async function handleSubmit() {
         setErrorMessages("")
         try {
@@ -53,9 +58,17 @@ export default function InputRepo() {
             }
         }
     }
+
     const handleClearInput = () => {
         router.push("/")
+        setErrorMessages("")
         setUrl("")
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleSubmit()
+        }
     }
 
     return (
@@ -64,7 +77,8 @@ export default function InputRepo() {
                 <div className="relative">
                     <Input
                         value={url}
-                        onChange={(e) => setUrl(e.target.value)}
+                        onChange={handleTyping}
+                        onKeyDown={handleKeyDown}
                         placeholder="Paste the git repository URL"
                         className="border-input pr-8"
                     />
