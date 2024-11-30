@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import { RepositoryProvider, useRepository } from "@/context/RepositoryContext"
 
 import CardContainer from "@/components/tool/container/card-container"
@@ -9,25 +10,36 @@ import InputRepo from "@/components/tool/input-repo"
 
 function Tool() {
     const { loading, container } = useRepository()
+    const [height, setHeight] = useState(0)
+    const toolRef = useRef<HTMLDivElement>(null)
     const isLoadingOrEmpty = loading || container.length === 0
+
+    useEffect(() => {
+        if (toolRef.current) {
+            if (isLoadingOrEmpty) {
+                setHeight(0)
+            } else {
+                setHeight(toolRef.current.scrollHeight)
+            }
+        }
+    }, [isLoadingOrEmpty, container])
 
     return (
         <>
-            <div
-                className={`z-50 transition-all duration-200 ${
-                    isLoadingOrEmpty ? "translate-y-20" : "-translate-y-0"
-                }`}
-            >
+            <div className="z-50">
                 <InputRepo />
             </div>
             <div
                 id="tool"
-                className={`relative flex flex-col gap-2 transition-all duration-300 ${
-                    isLoadingOrEmpty
-                        ? "!absolute h-0 -translate-y-5 scale-90 opacity-0"
-                        : "translate-y-0 scale-100 opacity-100"
-                }`}
+                ref={toolRef}
+                style={{ height: `${height}px` }}
+                className={`relative flex flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out`}
             >
+                <div
+                    className={`pointer-events-none absolute inset-x-0 bottom-0 z-50 h-16 bg-gradient-to-t from-background to-transparent transition-all delay-300 duration-200 ${
+                        !isLoadingOrEmpty ? "opacity-0" : "opacity-100"
+                    }`}
+                ></div>
                 <CardInfoRepo />
                 <div className="flex gap-2 max-md:flex-col md:max-h-[85vh]">
                     <CardContainer />
