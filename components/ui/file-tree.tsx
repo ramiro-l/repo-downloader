@@ -230,6 +230,7 @@ type FolderProps = {
     element: string
     isSelectable?: boolean
     isSelect?: boolean
+    folderIconCloseNotSelected?: React.ReactNode
     handelButtonSelectAll?: (sha: string) => void
     handleButtonDeslectAll?: (sha: string) => void
 } & FolderComponentProps
@@ -246,6 +247,7 @@ const Folder = forwardRef<
             isSelectable = true,
             isSelect,
             children,
+            folderIconCloseNotSelected,
             handelButtonSelectAll,
             handleButtonDeslectAll,
             ...props
@@ -299,6 +301,8 @@ const Folder = forwardRef<
                             : closeIcon ??
                               (isSelect ? (
                                   <FolderDot className="size-4" />
+                              ) : folderIconCloseNotSelected ? (
+                                  folderIconCloseNotSelected
                               ) : (
                                   <FolderIcon className="size-4" />
                               ))}

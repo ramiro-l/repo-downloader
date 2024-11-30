@@ -2,6 +2,8 @@ const GITHUB_API_URL = "https://api.github.com"
 const GITHUB_RAW_URL = "https://raw.githubusercontent.com"
 const GITHUB_URL = "https://github.com"
 
+const gitmodulesFileName = ".gitmodules"
+
 interface IGithubTree {
     sha: string
     url: string
@@ -12,10 +14,10 @@ interface IGithubTree {
 interface IGithubTreeItem {
     path: string
     mode: GithubTreeItemMode
-    type: "blob" | "tree"
+    type: "blob" | "tree" | "commit"
     sha: string
+    url?: string
     size?: number
-    url: string
 }
 
 enum GithubTreeItemMode {
@@ -24,6 +26,13 @@ enum GithubTreeItemMode {
     SUBDIRECTORY = "040000",
     SUBMODULE = "160000",
     SYMLINK = "120000",
+}
+
+interface GitHubSubmodule {
+    path: string
+    url: string
+    owner: string
+    repo: string
 }
 
 class GithubTree implements IGithubTree {
@@ -41,15 +50,33 @@ class GithubTree implements IGithubTree {
         this.tree = tree.tree.map((element) => new GithubTreeItem(element))
         this.truncated = tree.truncated
     }
+
+    haveSubmodules() {
+        return this.tree.some((item) => item.path === gitmodulesFileName)
+    }
+
+    haveDotGitmodules() {
+        return this.tree.some((item) => item.path === gitmodulesFileName)
+    }
+
+    getSubmoduleUrl(): string {
+        const submodule = this.tree.find(
+            (item) => item.path === gitmodulesFileName
+        )
+        if (!submodule || !submodule.url) {
+            throw new Error("No .gitmodules file found in the repository")
+        }
+        return submodule.url
+    }
 }
 
 class GithubTreeItem implements IGithubTreeItem {
     path: string
     mode: GithubTreeItemMode
-    type: "blob" | "tree"
+    type: "blob" | "tree" | "commit"
     sha: string
     size: number // Only for blobs, folders have size 0
-    url: string
+    url?: string
 
     constructor(item: IGithubTreeItem) {
         if (!isGithubTreeItem(item)) {
@@ -60,7 +87,7 @@ class GithubTreeItem implements IGithubTreeItem {
         this.type = item.type
         this.sha = item.sha
         this.size = item.size ? item.size : 0
-        this.url = item.url
+        this.url = item.url ?? undefined
     }
 }
 
@@ -77,9 +104,6 @@ const isGithubTree = (element: any): element is IGithubTree => {
 }
 
 const isGithubTreeItem = (element: any): element is IGithubTreeItem => {
-    if (element.mode === "160000") {
-        throw new Error("Submodules are not supported.")
-    }
     return (
         typeof element === "object" &&
         element !== null &&
@@ -87,9 +111,11 @@ const isGithubTreeItem = (element: any): element is IGithubTreeItem => {
         "mode" in element &&
         "type" in element &&
         "sha" in element &&
-        (element.type === "blob" || element.type === "tree") &&
+        (element.type === "blob" ||
+            element.type === "tree" ||
+            element.type === "commit") &&
         (element.type == "blob" ? "size" in element : true) &&
-        "url" in element
+        (element.type !== "commit" ? "url" in element : true)
     )
 }
 
@@ -97,6 +123,7 @@ export {
     GithubTree,
     GithubTreeItem,
     GithubTreeItemMode,
+    type GitHubSubmodule,
     GITHUB_API_URL,
     GITHUB_URL,
     GITHUB_RAW_URL,

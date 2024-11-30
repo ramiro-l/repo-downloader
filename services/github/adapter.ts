@@ -25,11 +25,13 @@ export const adaptGithubItemForFile = <TMetaData>(
         type: type,
         content: type === "dir" ? [] : undefined,
         downloadUrl: downloadUrl,
+        isSubmodule: item.mode === GithubTreeItemMode.SUBMODULE,
     }
 }
 
 const parseType = (item: GithubTreeItem): "file" | "dir" | "symlink" => {
     if (item.type === "tree") return "dir"
     if (item.mode === GithubTreeItemMode.SYMLINK) return "symlink"
+    if (item.mode === GithubTreeItemMode.SUBMODULE) return "dir"
     return "file"
 }

@@ -4,6 +4,7 @@ interface IFile<TMetaData> {
     size: number
     path: string[]
     type: "file" | "dir" | "symlink"
+    isSubmodule: boolean
     metaData?: TMetaData
     pathIndex?: number[]
     content?: File<TMetaData>[]
@@ -17,6 +18,7 @@ class File<TMetaData> implements IFile<TMetaData> {
     path: string[] // path not including the file name
     pathIndex: number[] = [] // use for search in File[]
     type: "file" | "dir" | "symlink"
+    isSubmodule: boolean = false
     metaData: TMetaData
     _content?: File<TMetaData>[]
     _downloadUrl?: string
@@ -30,6 +32,7 @@ class File<TMetaData> implements IFile<TMetaData> {
         this._content = item.content
         this.metaData = initMetaData
         this._downloadUrl = item.downloadUrl
+        this.isSubmodule = item.isSubmodule
     }
 
     public get content(): File<TMetaData>[] {

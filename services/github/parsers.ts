@@ -1,4 +1,4 @@
-import { GITHUB_RAW_URL, GITHUB_URL } from "./const"
+import { GITHUB_RAW_URL, GITHUB_URL } from "@/services/github/const"
 
 export const getGithubUrlInfo = (
     url: string
@@ -67,5 +67,9 @@ export function getGithubRawUrl(
     branch: string,
     path: string
 ) {
+    /** NOTE: this is plus, but it's not necessary for "fetch"
+    const encodePath = path.split("/").map(encodeURIComponent).join("/")
+    return `${GITHUB_RAW_URL}/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${encodeURIComponent(branch)}/${encodePath}`
+     */
     return `${GITHUB_RAW_URL}/${owner}/${repo}/${branch}/${path}`
 }

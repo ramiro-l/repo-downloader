@@ -4,7 +4,12 @@ import {
     GITHUB_API_URL,
     GithubTree,
     GithubTreeItem,
+    type GitHubSubmodule,
 } from "@/services/github/const"
+import {
+    addSubmoduleFiles,
+    getGithubSubmodules,
+} from "@/services/github/get-submodules"
 
 export async function getGithubFiles<TMetaData>(
     owner: string,
@@ -15,11 +20,18 @@ export async function getGithubFiles<TMetaData>(
     files: File<TMetaData>[]
     rootId: string
 }> {
-    const tree = await getGithubTree(owner, repo, branch)
-
+    const data = await getGithubTree(owner, repo, branch)
+    const files = await githubTreeToFiles(
+        data.githubTree,
+        initMetadata,
+        owner,
+        repo,
+        branch
+    )
+    await addSubmoduleFiles(files, initMetadata, data.submodules)
     return {
-        files: await githubTreeToFiles(tree, initMetadata, owner, repo, branch),
-        rootId: tree.sha,
+        files: files,
+        rootId: data.githubTree.sha,
     }
 }
 
@@ -27,7 +39,10 @@ export async function getGithubTree(
     owner: string,
     repo: string,
     branch: string
-): Promise<GithubTree> {
+): Promise<{
+    githubTree: GithubTree
+    submodules: GitHubSubmodule[]
+}> {
     const url = `${GITHUB_API_URL}/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`
     const response = await fetch(url)
     const data = await response.json()
@@ -37,8 +52,18 @@ export async function getGithubTree(
             "GitHub API response is truncated, too many files in the repository"
         )
     }
+
+    let submodules: GitHubSubmodule[] = []
+    if (tree.haveSubmodules()) {
+        if (!tree.haveDotGitmodules())
+            throw new Error(
+                "Submodules are present but .gitmodules file is missing"
+            )
+        submodules = await getGithubSubmodules(tree.getSubmoduleUrl())
+    }
+
     tree.tree.sort(orderTreeItems)
-    return tree
+    return { githubTree: tree, submodules }
 }
 
 export async function githubTreeToFiles<TMetaData>(

@@ -1,6 +1,6 @@
 import { File as FileItem } from "@/services/file"
 import { filesize } from "filesize"
-import { FileIcon, FileSymlink } from "lucide-react"
+import { FileIcon, FileSymlink, FolderGit2 } from "lucide-react"
 
 import { MetaData } from "@/hooks/git/RepositoryController"
 import { File, Folder } from "@/components/ui/file-tree"
@@ -29,6 +29,11 @@ export default function ElementsTree({
                         value={file.id}
                         element={file.name}
                         isSelect={file.metaData?.selected}
+                        folderIconCloseNotSelected={
+                            file.isSubmodule ? (
+                                <FolderGit2 className="size-4" />
+                            ) : undefined
+                        }
                         handelButtonSelectAll={() =>
                             selectFolder(file.pathIndex, true)
                         }
