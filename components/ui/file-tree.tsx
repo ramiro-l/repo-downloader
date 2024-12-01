@@ -311,6 +311,7 @@ const Folder = forwardRef<
                     {expandedItems?.includes(value) && (
                         <div className="flex select-none gap-1">
                             <Button
+                                asChild
                                 variant="outline"
                                 className="h-2 px-1 text-xs uppercase hover:border-black hover:bg-black hover:text-white dark:border-white dark:hover:border-secondary-foreground dark:hover:bg-secondary-foreground dark:hover:text-secondary "
                                 onClick={(e) => {
@@ -318,9 +319,10 @@ const Folder = forwardRef<
                                     handelButtonSelectAll?.(value)
                                 }}
                             >
-                                select all
+                                <span>select all</span>
                             </Button>
                             <Button
+                                asChild
                                 variant="outline"
                                 className="h-2 px-0 text-xs uppercase hover:!border-red-600 hover:bg-red-600 hover:text-white dark:border-white"
                                 onClick={(e) => {
@@ -328,7 +330,9 @@ const Folder = forwardRef<
                                     handleButtonDeslectAll?.(value)
                                 }}
                             >
-                                <X className="size-4" />
+                                <span>
+                                    <X className="size-4" />
+                                </span>
                             </Button>
                         </div>
                     )}
