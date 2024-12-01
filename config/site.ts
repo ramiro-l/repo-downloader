@@ -8,4 +8,5 @@ export const siteConfig = {
         me: "https://github.com/ramiro-l",
         github: "https://github.com/ramiro-l/repo-downloader",
     },
+    googleSiteVerification: "2CCe4D6d14HrwjQ5nAUkeNnNJ7nTfRar8MpRucJoo0k",
 }
