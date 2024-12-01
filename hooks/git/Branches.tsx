@@ -20,7 +20,9 @@ export function useBranches(loadContainer: (branch: string) => Promise<void>) {
         setLoading(true)
         try {
             const branches = await getGithubBranches(owner, repo)
-            if (initBranch) branches.push(initBranch)
+            if (initBranch && !branches.includes(initBranch)) {
+                branches.push(initBranch)
+            }
             setBranches(branches)
             const firstBranch = initBranch ?? initBranchSelected(branches)
             setBranchSelected(firstBranch)
