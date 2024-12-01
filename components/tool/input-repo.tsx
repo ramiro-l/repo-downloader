@@ -11,7 +11,8 @@ import { Spinner } from "@/components/ui/spinner"
 import { Switch } from "@/components/ui/switch"
 
 export default function InputRepo() {
-    const { initRepository, loading, fetchSubmodules } = useRepository()
+    const { initRepository, loading, fetchSubmodules, container } =
+        useRepository()
     const router = useRouter()
     const searchParams = useSearchParams()
     const [url, setUrl] = useState("")
@@ -26,12 +27,14 @@ export default function InputRepo() {
     }, [searchParams])
 
     useEffect(() => {
-        if (getSubmodules && !fetchSubmodules) {
-            setErrorMessages("To include submodules, search again.")
-        } else if (!getSubmodules && fetchSubmodules) {
-            setErrorMessages("To exclude submodules, search again.")
-        } else {
-            setErrorMessages("")
+        if (container.length > 0) {
+            if (getSubmodules && !fetchSubmodules) {
+                setErrorMessages("To include submodules, search again.")
+            } else if (!getSubmodules && fetchSubmodules) {
+                setErrorMessages("To exclude submodules, search again.")
+            } else {
+                setErrorMessages("")
+            }
         }
     }, [getSubmodules, fetchSubmodules])
 
