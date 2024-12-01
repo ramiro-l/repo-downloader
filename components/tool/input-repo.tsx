@@ -104,15 +104,15 @@ export default function InputRepo() {
                             checked={getSubmodules}
                             onCheckedChange={setGetSubmodules}
                         />
-                        <span className="text-sm">
+                        <p className="text-sm">
                             <span className="text-muted-foreground/80">
                                 Include submodules
                             </span>
-                            <span className="text-muted-foreground/60">
+                            <span className="text-muted-foreground/60 max-[355px]:hidden">
                                 {" "}
                                 (experimental)
                             </span>
-                        </span>
+                        </p>
                     </div>
                     {errorMessages && (
                         <span className="ml-1 text-sm text-red-500 transition-all duration-200">

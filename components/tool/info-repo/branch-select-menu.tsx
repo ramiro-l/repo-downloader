@@ -26,7 +26,7 @@ export default function BranchSelectMenu() {
                     </div>
                 </div>
             </SelectTrigger>
-            <SelectContent align="end">
+            <SelectContent align="end" className="max-w-[80vw]">
                 {branches.map((branch) => (
                     <SelectItem key={branch} value={branch}>
                         {branch}
