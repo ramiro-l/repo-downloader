@@ -36,7 +36,7 @@ export default function CardInfoRepo() {
                     </span>
                 </a>
             </div>
-            <div className=" flex w-1/3 gap-2 max-md:w-1/2 max-sm:w-full">
+            <div className=" flex w-1/3 gap-2 truncate max-md:w-1/2 max-sm:w-full">
                 <DeselectAllButton />
                 <DownloadRepositoryButton />
                 <BranchSelectMenu />
