@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { Switch } from "@/components/ui/switch"
-import { scrollToBottom } from "@/components/scroll"
 
 export default function InputRepo() {
     const { initRepository, loading, fetchSubmodules } = useRepository()
@@ -48,7 +47,6 @@ export default function InputRepo() {
                 throw new Error("The repository URL is required.")
             router.push(`?repository=${encodeURIComponent(url)}`)
             await initRepository(url, getSubmodules)
-            scrollToBottom()
         } catch (error) {
             if (error instanceof Error) {
                 router.push("/")
