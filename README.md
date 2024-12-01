@@ -1,5 +1,19 @@
 # Repo Downloader
 
-![preview](./app/og.png)
+![Preview of Repo Downloader](./app/og.png)
 
-This is a simple web application that allows you to download files from a public Github repository. Select the repository, the branch and the file you want to download and click on the download button. The file will be downloaded.
+**[Repo Downloader](https://repo-downloader.pages.dev/)** is a practical web tool that allows you to download only the files you need from a repository. No more unnecessary cloning. Select branches, explore submodules, and get exactly what you want with ease and speed.
+
+## Features 🚀
+
+-   **Selective Download**: Pick and download specific files or folders.
+-   **Branch Navigation**: Easily access and switch between repository branches.
+-   **Submodule Management**: Explore and download content from git submodules effortlessly.
+
+## Try It Now 🌐
+
+Explore **Repo Downloader** directly in your browser! [Click here to get started](https://repo-downloader.pages.dev/).
+
+## How to Contribute 🤝
+
+We love contributions from the community! Whether you have ideas for new features, bug fixes, or improvements to the documentation, check out our [Contributing Guidelines](CONTRIBUTING.md) to learn how to get involved.
