@@ -18,7 +18,11 @@ export default function BranchSelectMenu() {
                 toggleBranch(value)
             }}
         >
-            <SelectTrigger id="select-15" className="truncate">
+            <SelectTrigger
+                id="select-15"
+                className="truncate"
+                aria-label="Select branch"
+            >
                 <div className="flex w-[90%] min-w-4 items-center gap-2 truncate max-[330px]:justify-center">
                     <GitBranch className="size-4" />
                     <div className="w-[90%] truncate text-left max-[330px]:hidden">

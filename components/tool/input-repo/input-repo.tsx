@@ -101,6 +101,7 @@ export default function InputRepo() {
                             size="small"
                             checked={getSubmodules}
                             onCheckedChange={setGetSubmodules}
+                            aria-label="Include submodules"
                         />
                         <p className="text-sm">
                             <span className="text-muted-foreground/80">
