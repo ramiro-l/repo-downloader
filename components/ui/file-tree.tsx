@@ -21,7 +21,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { scrollToBottom } from "@/components/scroll"
 
 type TreeViewElement = {
@@ -175,6 +175,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
                         className="relative h-full px-2"
                         dir={dir as Direction}
                     >
+                        <ScrollBar orientation="horizontal" />
                         <AccordionPrimitive.Root
                             {...props}
                             type="multiple"

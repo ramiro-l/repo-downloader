@@ -27,6 +27,7 @@ export default function ElementsTree({
             {container.map((file) =>
                 file.type === "dir" ? (
                     <Folder
+                        className="flex-nowrap text-nowrap"
                         key={file.id}
                         value={file.id}
                         element={file.name}
@@ -55,6 +56,7 @@ export default function ElementsTree({
                     </Folder>
                 ) : (
                     <File
+                        className="flex-nowrap text-nowrap"
                         key={file.id}
                         value={file.id}
                         isSelect={file.metaData?.selected}
