@@ -6,8 +6,9 @@ import {
     GithubTreeItem,
     type GitHubSubmodule,
 } from "@/services/github/const"
+import { handleGithubApiRateLimitError } from "@/services/github/get-rate-limit"
 import {
-    addSubmoduleFiles,
+    addGithubSubmoduleFiles,
     getGithubSubmodules,
 } from "@/services/github/get-submodules"
 
@@ -31,7 +32,7 @@ export async function getGithubFiles<TMetaData>(
     )
 
     if (fetchSubmodules) {
-        await addSubmoduleFiles(files, initMetadata, data.submodules)
+        await addGithubSubmoduleFiles(files, initMetadata, data.submodules)
     }
 
     return {
@@ -50,6 +51,12 @@ export async function getGithubTree(
 }> {
     const url = `${GITHUB_API_URL}/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`
     const response = await fetch(url)
+
+    if (!response.ok) {
+        handleGithubApiRateLimitError((await response.json()).message)
+        throw new Error("Failed to get tree.")
+    }
+
     const data = await response.json()
     const tree = new GithubTree(data)
     if (tree.truncated) {

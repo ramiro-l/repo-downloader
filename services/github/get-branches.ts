@@ -1,4 +1,5 @@
 import { GITHUB_API_URL } from "@/services/github/const"
+import { handleGithubApiRateLimitError } from "@/services/github/get-rate-limit"
 
 export const getGithubBranches = async (
     owner: string,
@@ -9,6 +10,7 @@ export const getGithubBranches = async (
     )
 
     if (!response.ok) {
+        handleGithubApiRateLimitError((await response.json()).message)
         throw new Error("Failed to get branches")
     }
 

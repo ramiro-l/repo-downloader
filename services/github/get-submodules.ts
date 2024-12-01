@@ -4,7 +4,7 @@ import { getGithubTree, githubTreeToFiles } from "@/services/github/get-tree"
 import { getGithubUrlInfo } from "@/services/github/parsers"
 import { parse } from "ini"
 
-export async function addSubmoduleFiles<TMetaData>(
+export async function addGithubSubmoduleFiles<TMetaData>(
     files: File<TMetaData>[],
     initMetaData: TMetaData,
     submodules: GitHubSubmodule[]
@@ -45,7 +45,11 @@ export async function addSubmoduleFiles<TMetaData>(
             item._content = repoFiles
             submodules = submodules.filter((sub) => sub.path !== item.id)
         } else if (item.isDirectory()) {
-            await addSubmoduleFiles(item.content, initMetaData, submodules)
+            await addGithubSubmoduleFiles(
+                item.content,
+                initMetaData,
+                submodules
+            )
         }
     }
 }
