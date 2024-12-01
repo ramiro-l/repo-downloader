@@ -63,7 +63,9 @@ export default function ElementsTree({
                     >
                         <TooltipProvider delayDuration={800}>
                             <Tooltip>
-                                <TooltipTrigger>{file.name}</TooltipTrigger>
+                                <TooltipTrigger asChild>
+                                    <span>{file.name}</span>
+                                </TooltipTrigger>
                                 <TooltipContent
                                     side="right"
                                     className={`flex h-4 items-center justify-center py-0 text-xs shadow-none ${

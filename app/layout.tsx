@@ -1,5 +1,5 @@
 import "@/styles/globals.css"
-import { Metadata } from "next"
+import { Metadata, Viewport } from "next"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -9,6 +9,14 @@ import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import ogImage from "@/app/og.png"
+
+export const viewport: Viewport = {
+    themeColor: "hsl(var(--background))",
+    // themeColor: [
+    //     { media: "(prefers-color-scheme: light)", color: "white" },
+    //     { media: "(prefers-color-scheme: dark)", color: "black" },
+    // ],
+}
 
 export const metadata: Metadata = {
     metadataBase: new URL(siteConfig.url),
@@ -46,10 +54,6 @@ export const metadata: Metadata = {
         template: `%s - ${siteConfig.name}`,
     },
     description: siteConfig.description,
-    themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "white" },
-        { media: "(prefers-color-scheme: dark)", color: "black" },
-    ],
     twitter: {
         card: "summary_large_image",
         title: siteConfig.name,

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import CardContainer from "@/components/tool/container/card-container"
 import SelectedItemsDownloader from "@/components/tool/downloader/card-downloader"
 import CardInfoRepo from "@/components/tool/info-repo/card-info-repo"
-import InputRepo from "@/components/tool/input-repo"
+import InputRepo from "@/components/tool/input-repo/input-repo"
 
 const TIME_TO_ANIMATE: 0 | 75 | 100 | 150 | 200 | 300 | 500 | 700 | 1000 = 500
 

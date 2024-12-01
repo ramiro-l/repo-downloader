@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense, useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { useRepository } from "@/context/RepositoryContext"
 import { CircleX, SearchCode } from "lucide-react"
 
@@ -9,22 +9,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { Switch } from "@/components/ui/switch"
+import InputWithSearchParams from "@/components/tool/input-repo/input-with-search-params"
 
 export default function InputRepo() {
     const { initRepository, loading, fetchSubmodules, container } =
         useRepository()
     const router = useRouter()
-    const searchParams = useSearchParams()
     const [url, setUrl] = useState("")
     const [errorMessages, setErrorMessages] = useState<string>("")
     const [getSubmodules, setGetSubmodules] = useState(fetchSubmodules)
-
-    useEffect(() => {
-        const repositoryUrl = searchParams.get("repository")
-        if (repositoryUrl) {
-            setUrl(decodeURIComponent(repositoryUrl))
-        }
-    }, [searchParams])
 
     useEffect(() => {
         if (container.length > 0) {
@@ -36,7 +29,7 @@ export default function InputRepo() {
                 setErrorMessages("")
             }
         }
-    }, [getSubmodules, fetchSubmodules])
+    }, [getSubmodules, fetchSubmodules, container.length])
 
     const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (errorMessages) setErrorMessages("")
@@ -76,13 +69,18 @@ export default function InputRepo() {
         <div className="z-50 mb-4 flex gap-2 max-lg:flex-col">
             <div className="w-full flex-col ">
                 <div className="relative">
-                    <Input
-                        value={url}
-                        onChange={handleTyping}
-                        onKeyDown={handleKeyDown}
-                        placeholder="Paste the git repository URL"
-                        className="border-input pr-8"
-                    />
+                    <Suspense
+                        fallback={<Input disabled placeholder="Loading..." />}
+                    >
+                        <InputWithSearchParams
+                            value={url}
+                            setValue={setUrl}
+                            onChange={handleTyping}
+                            onKeyDown={handleKeyDown}
+                            placeholder="Paste the git repository URL"
+                            className="border-input pr-8"
+                        />
+                    </Suspense>
                     {url && (
                         <button
                             className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
