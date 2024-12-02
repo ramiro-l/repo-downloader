@@ -17,3 +17,7 @@ Explore **Repo Downloader** directly in your browser! [Click here to get started
 ## How to Contribute 🤝
 
 We love contributions from the community! Whether you have ideas for new features, bug fixes, or improvements to the documentation, check out our [Contributing Guidelines](CONTRIBUTING.md) to learn how to get involved.
+
+## License 📝
+
+This project is licensed under the [MIT License](LICENSE).
