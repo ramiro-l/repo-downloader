@@ -2,7 +2,7 @@ const GITHUB_API_URL = "https://api.github.com"
 const GITHUB_RAW_URL = "https://raw.githubusercontent.com"
 const GITHUB_URL = "https://github.com"
 
-const gitmodulesFileName = ".gitmodules"
+const GITMODULES_FILE_NAME = ".gitmodules"
 
 interface IGithubTree {
     sha: string
@@ -52,16 +52,18 @@ class GithubTree implements IGithubTree {
     }
 
     haveSubmodules() {
-        return this.tree.some((item) => item.path === gitmodulesFileName)
+        return this.tree.some(
+            (item) => item.mode === GithubTreeItemMode.SUBMODULE
+        )
     }
 
     haveDotGitmodules() {
-        return this.tree.some((item) => item.path === gitmodulesFileName)
+        return this.tree.some((item) => item.path === GITMODULES_FILE_NAME)
     }
 
     getSubmoduleUrl(): string {
         const submodule = this.tree.find(
-            (item) => item.path === gitmodulesFileName
+            (item) => item.path === GITMODULES_FILE_NAME
         )
         if (!submodule || !submodule.url) {
             throw new Error("No .gitmodules file found in the repository")

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { createAndDownloadZip } from "@/services/downloader"
 import { File } from "@/services/file"
 import {
-    getGithubDownloadUrl,
+    getGithubDownloadRepoUrl,
     getGithubRepoWebUrl,
     getGithubUrlInfo,
     isGithubUrl,
@@ -57,7 +57,7 @@ export function useRepositoryController(): RepositoryController {
         setCantFoldersSelected(0)
         await loadContainer(owner, repo, branch, fetchSubmodules)
         setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
-        setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
+        setDownloadRepoUrl(getGithubDownloadRepoUrl(owner, repo, branch))
     }
 
     const {
@@ -91,7 +91,9 @@ export function useRepositoryController(): RepositoryController {
                 setCantFoldersSelected(0)
                 const branch = await initBranches(owner, repo, urlInfo.branch)
                 setRepoWebUrl(getGithubRepoWebUrl(owner, repo, branch))
-                setDownloadRepoUrl(getGithubDownloadUrl(owner, repo, branch))
+                setDownloadRepoUrl(
+                    getGithubDownloadRepoUrl(owner, repo, branch)
+                )
                 await loadContainer(owner, repo, branch, fetchSubmodules)
                 setFetchSubmodules(fetchSubmodules)
                 setLoadingRepository(false)

@@ -53,7 +53,7 @@ export function getGithubRepoWebUrl(
     }
 }
 
-export function getGithubDownloadUrl(
+export function getGithubDownloadRepoUrl(
     owner: string,
     repo: string,
     branch: string
