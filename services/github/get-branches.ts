@@ -17,7 +17,7 @@ export const getGithubBranches = async (
         const branches = await response.json()
 
         if (!response.ok) {
-            handleGithubApiRateLimitError(branches.message)
+            await handleGithubApiRateLimitError(branches.message)
             throw new Error("Failed to get branches")
         }
 

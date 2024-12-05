@@ -54,7 +54,7 @@ export async function getGithubTree(
     const data = await response.json()
 
     if (!response.ok) {
-        handleGithubApiRateLimitError(data.message)
+        await handleGithubApiRateLimitError(data.message)
         throw new Error("Failed to get tree.")
     }
 
@@ -86,7 +86,7 @@ const fetchTreeInParts = async (url: string): Promise<GithubTree> => {
     const data = await response.json()
 
     if (!response.ok) {
-        handleGithubApiRateLimitError(data.message)
+        await handleGithubApiRateLimitError(data.message)
         throw new Error("Failed to get tree.")
     }
 
@@ -97,7 +97,7 @@ const fetchTreeInParts = async (url: string): Promise<GithubTree> => {
             let treeData = await treeChildren.json()
 
             if (!treeChildren.ok) {
-                handleGithubApiRateLimitError(treeData.message)
+                await handleGithubApiRateLimitError(treeData.message)
                 throw new Error("Failed to get tree.")
             }
             if (treeData.truncated) {
