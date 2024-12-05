@@ -45,8 +45,9 @@ export default function InputRepo() {
             await initRepository(url, getSubmodules)
         } catch (error) {
             if (error instanceof Error) {
-                router.push("/")
                 setErrorMessages(error.message)
+                if (error.message.includes("rate limit exceeded")) return
+                router.push("/")
             } else {
                 setErrorMessages("An unknown error occurred.")
             }
