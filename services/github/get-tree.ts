@@ -51,18 +51,17 @@ export async function getGithubTree(
 }> {
     const url = `${GITHUB_API_URL}/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`
     const response = await fetch(url)
+    const data = await response.json()
 
     if (!response.ok) {
-        handleGithubApiRateLimitError((await response.json()).message)
+        handleGithubApiRateLimitError(data.message)
         throw new Error("Failed to get tree.")
     }
 
-    const data = await response.json()
-    const tree = new GithubTree(data)
+    let tree = new GithubTree(data)
     if (tree.truncated) {
-        throw new Error(
-            "GitHub API response is truncated, too many files in the repository"
-        )
+        if (!data.url) throw new Error("GitHub API response truncated, no URL")
+        tree = await fetchTreeInParts(data.url)
     }
 
     let submodules: GitHubSubmodule[] = []
@@ -76,6 +75,53 @@ export async function getGithubTree(
 
     tree.tree.sort(orderTreeItems)
     return { githubTree: tree, submodules }
+}
+
+const fetchTreeInParts = async (url: string): Promise<GithubTree> => {
+    if (url.includes("recursive=1")) {
+        throw new Error("Recursive flag is set, no need to fetch in parts")
+    }
+
+    const response = await fetch(url)
+    const data = await response.json()
+
+    if (!response.ok) {
+        handleGithubApiRateLimitError(data.message)
+        throw new Error("Failed to get tree.")
+    }
+
+    const rootTree = new GithubTree(data)
+    for (const item of data.tree) {
+        if (item.type === "tree") {
+            const treeChildren = await fetch(item.url + "?recursive=1")
+            let treeData = await treeChildren.json()
+
+            if (!treeChildren.ok) {
+                handleGithubApiRateLimitError(treeData.message)
+                throw new Error("Failed to get tree.")
+            }
+            if (treeData.truncated) {
+                treeData = await fetchTreeInParts(treeData.url)
+            }
+
+            treeData.tree.forEach((child: GithubTreeItem) => {
+                child.path = `${item.path}/${child.path}`
+            })
+
+            rootTree.tree.push(...treeData.tree)
+        }
+    }
+    return rootTree
+}
+
+const orderTreeItems = (a: GithubTreeItem, b: GithubTreeItem) => {
+    if ((a.type === "tree" || a.type === "commit") && b.type === "blob") {
+        return -1
+    }
+    if (a.type === "blob" && (b.type === "tree" || b.type === "commit")) {
+        return 1
+    }
+    return a.path.localeCompare(b.path)
 }
 
 export async function githubTreeToFiles<TMetaData>(
@@ -96,16 +142,6 @@ export async function githubTreeToFiles<TMetaData>(
     }
 
     return container
-}
-
-const orderTreeItems = (a: GithubTreeItem, b: GithubTreeItem) => {
-    if ((a.type === "tree" || a.type === "commit") && b.type === "blob") {
-        return -1
-    }
-    if (a.type === "blob" && (b.type === "tree" || b.type === "commit")) {
-        return 1
-    }
-    return a.path.localeCompare(b.path)
 }
 
 const addFileToContainer = <TMetaData>(
