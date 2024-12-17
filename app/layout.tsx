@@ -67,6 +67,7 @@ export const metadata: Metadata = {
         icon: "/favicon.ico",
         apple: "/apple-touch-icon.png",
     },
+    keywords: siteConfig.keywords.join(", "),
 }
 
 interface RootLayoutProps {
