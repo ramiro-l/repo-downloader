@@ -10,10 +10,6 @@
 -   **Branch Navigation**: Easily access and switch between repository branches.
 -   **Submodule Management**: Explore and download content from git submodules effortlessly.
 
-## Try It Now 🌐
-
-Explore **Repo Downloader** directly in your browser! [Click here to get started](https://repo-downloader.pages.dev/).
-
 ## How to Contribute 🤝
 
 We love contributions from the community! Whether you have ideas for new features, bug fixes, or improvements to the documentation, check out our [Contributing Guidelines](CONTRIBUTING.md) to learn how to get involved.
