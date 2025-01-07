@@ -400,7 +400,8 @@ const File = forwardRef<
                     className={cn(
                         "flex cursor-pointer items-center gap-1 rounded-md px-1 text-sm duration-200 ease-in-out  rtl:pl-1 rtl:pr-0",
                         {
-                            "bg-primary text-white": isSelected && isSelectable,
+                            "bg-primary !text-white":
+                                isSelected && isSelectable,
                         },
                         isSelectable
                             ? "cursor-pointer"
