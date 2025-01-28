@@ -8,7 +8,6 @@ export const siteConfig = {
         me: "https://github.com/ramiro-l",
         github: "https://github.com/ramiro-l/repo-downloader",
     },
-    googleSiteVerification: "2CCe4D6d14HrwjQ5nAUkeNnNJ7nTfRar8MpRucJoo0k",
     keywords: [
         "github",
         "download",
@@ -31,4 +30,6 @@ export const siteConfig = {
         "download all folders",
         "download all content",
     ],
+    googleSiteVerification: "2CCe4D6d14HrwjQ5nAUkeNnNJ7nTfRar8MpRucJoo0k",
+    ahrefsAnalyticsKey: "I8CtI3VGeyAF+ncgjnsdmQ"
 } as const

@@ -82,6 +82,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     name="google-site-verification"
                     content={siteConfig.googleSiteVerification}
                 />
+                <script
+                    src="https://analytics.ahrefs.com/analytics.js"
+                    data-key={siteConfig.ahrefsAnalyticsKey}
+                    async
+                ></script>
             </head>
             <body
                 className={cn(

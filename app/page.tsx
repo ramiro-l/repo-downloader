@@ -1,7 +1,7 @@
 import { siteConfig } from "@/config/site"
 import ContainerTool from "@/components/tool/container-tool"
 
-export default async function IndexPage() {
+export default function IndexPage() {
     return (
         <section className="container flex min-h-[80vh] flex-col justify-center pb-8 pt-6 md:pt-10 lg:px-32 xl:px-64">
             <div className="mb-6 flex max-w-[980px] flex-col items-start gap-2 max-lg:!max-w-full max-lg:items-center max-lg:text-center">
