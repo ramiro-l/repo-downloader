@@ -1,5 +1,7 @@
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
+import Head from "next/head"
+import Script from "next/script"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -77,17 +79,18 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <head>
+            <Head>
                 <meta
                     name="google-site-verification"
                     content={siteConfig.googleSiteVerification}
                 />
-                <script
-                    src="https://analytics.ahrefs.com/analytics.js"
-                    data-key={siteConfig.ahrefsAnalyticsKey}
-                    async
-                ></script>
-            </head>
+            </Head>
+            <Script
+                async
+                strategy="afterInteractive"
+                src="https://analytics.ahrefs.com/analytics.js"
+                data-key={siteConfig.ahrefsAnalyticsKey}
+            />
             <body
                 className={cn(
                     "min-h-screen bg-background font-sans antialiased",

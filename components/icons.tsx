@@ -1,17 +1,54 @@
-import {
-    FolderDown,
-    LucideProps,
-    Moon,
-    SunMedium,
-    type Icon as LucideIcon,
-} from "lucide-react"
+import { LucideProps, type Icon as LucideIcon } from "lucide-react"
 
 export type Icon = typeof LucideIcon
 
 export const Icons = {
-    Sun: SunMedium,
-    Moon: Moon,
-    Logo: FolderDown,
+    Sun: ({ className }: { className?: string }) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`${className} stroke-black dark:stroke-white`}
+        >
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 3v1" />
+            <path d="M12 20v1" />
+            <path d="M3 12h1" />
+            <path d="M20 12h1" />
+            <path d="m18.364 5.636-.707.707" />
+            <path d="m6.343 17.657-.707.707" />
+            <path d="m5.636 5.636.707.707" />
+            <path d="m17.657 17.657.707.707" />
+        </svg>
+    ),
+    Moon: ({ className }: { className?: string }) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`${className} stroke-black dark:stroke-white`}
+        >
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+        </svg>
+    ),
+    Logo: ({ className }: { className?: string }) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`${className} stroke-black  dark:stroke-white `}
+        >
+            <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+            <path d="M12 10v6" />
+            <path d="m15 13-3 3-3-3" />
+        </svg>
+    ),
     GitHub: (props: LucideProps) => (
         <svg viewBox="0 0 438.549 438.549" {...props}>
             <path
