@@ -17,6 +17,7 @@ export function ThemeToggle() {
         >
             <Icons.Sun className="h-6 w-[1.3rem] dark:hidden" />
             <Icons.Moon className="hidden size-5 dark:block" />
+            <span className="sr-only">Toggle theme</span>
         </Button>
     )
 }

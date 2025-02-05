@@ -11,6 +11,7 @@ import {
 
 export default function DownloadRepositoryButton() {
     const { downloadRepoUrl } = useRepository()
+    if (!downloadRepoUrl) return null
     return (
         <TooltipProvider delayDuration={0}>
             <Tooltip>

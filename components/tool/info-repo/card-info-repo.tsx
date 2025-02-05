@@ -11,7 +11,7 @@ export default function CardInfoRepo() {
     return (
         <div className=" z-10 flex w-full items-center justify-between gap-2 rounded-lg border border-input bg-background p-2">
             <div className="ml-2 w-2/3  max-md:w-auto max-sm:ml-0  ">
-                <a
+           {repoWebUrl &&      <a
                     className="flex items-center gap-2 text-sm font-bold hover:underline"
                     href={repoWebUrl}
                     target="_blank"
@@ -34,7 +34,7 @@ export default function CardInfoRepo() {
                             ? repo?.slice(0, 10) + "..."
                             : repo}
                     </span>
-                </a>
+                </a>}
             </div>
             <div className=" flex w-1/3 gap-2 truncate max-md:w-1/2 max-sm:w-full">
                 <DeselectAllButton />
