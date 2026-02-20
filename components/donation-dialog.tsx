@@ -46,12 +46,13 @@ export function DonationDialog() {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild className="max-md:hidden">
+            <DialogTrigger asChild>
                 <Button
                     variant="ghost"
-                    className="dark:border-primary dark:border dark:hover:bg-primary/10"
-                >☕
-                    Donate
+                    className="dark:border-primary dark:border dark:hover:bg-primary/10 max-sm:px-3"
+                >
+                    ☕
+                    <span className="ml-2 max-md:hidden">Donate</span>
                 </Button>
             </DialogTrigger>
 
