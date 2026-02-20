@@ -31,5 +31,10 @@ export const siteConfig = {
         "download all content",
     ],
     googleSiteVerification: "2CCe4D6d14HrwjQ5nAUkeNnNJ7nTfRar8MpRucJoo0k",
-    ahrefsAnalyticsKey: "I8CtI3VGeyAF+ncgjnsdmQ"
+    ahrefsAnalyticsKey: "I8CtI3VGeyAF+ncgjnsdmQ",
+    donations: {
+        search_threshold: 3,
+        download_threshold: 1,
+        paypal_link: "https://www.paypal.com/donate/?hosted_button_id=QKEVRKQJ4FGUA"
+    }
 } as const

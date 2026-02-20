@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRepository } from "@/context/RepositoryContext"
 import { QUERY_PARAMS } from "@/services/query-params.ts/const"
+import { incrementSearchCount } from "@/lib/donations"
 import {
     clearQueryParams,
     deleteQueryParam,
@@ -49,6 +50,7 @@ export default function InputRepo() {
 
     async function handleSubmit() {
         setErrorMessages("")
+        incrementSearchCount()
         try {
             if (!url || url === "") {
                 throw new Error("The repository URL is required.")

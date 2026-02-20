@@ -2,10 +2,14 @@
 
 import { useState } from "react"
 import { useRepository } from "@/context/RepositoryContext"
+import { incrementDownloadCount } from "@/lib/donations"
 import { DownloadIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
+
+import { DonationMessage } from "@/components/tool/downloader/donation-message"
+
 import { infoSelectedFiles } from "@/components/tool/downloader/info-selected-files"
 
 export default function SelectedItemsDownloader() {
@@ -14,11 +18,14 @@ export default function SelectedItemsDownloader() {
     const [loading, setLoading] = useState<boolean>(false)
     const [notSelectedItemsTrigger, setNotSelectedItemsTrigger] =
         useState<boolean>(false)
+    const [showDonationMessage, setShowDonationMessage] = useState<boolean>(false)
 
     const handleDownload = async () => {
         if (cantFilesSelected > 0) {
             setLoading(true)
+            incrementDownloadCount()
             await downloadSelectedFiles()
+            setShowDonationMessage(true)
             setLoading(false)
         } else {
             handleNotSelectedItems()
@@ -54,13 +61,15 @@ export default function SelectedItemsDownloader() {
                 )}{" "}
             </Button>
             <p
-                className={` rounded-md py-1 text-center text-sm text-secondary-foreground/75 transition-all duration-75 ${
-                    notSelectedItemsTrigger &&
+                className={` rounded-md py-1 text-center text-sm text-secondary-foreground/75 transition-all duration-75 ${notSelectedItemsTrigger &&
                     "font-medium !text-secondary-foreground"
-                }`}
+                    }`}
             >
                 {infoSelectedFiles(cantFilesSelected, cantFoldersSelected)}
             </p>
+            <div className={`${showDonationMessage ? "opacity-100 mt-2" : "opacity-0 -mb-32"} transition-all duration-150`}>
+                <DonationMessage onClose={() => setShowDonationMessage(false)} />
+            </div>
         </div>
     )
 }
